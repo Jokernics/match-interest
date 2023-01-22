@@ -1,0 +1,19 @@
+.text-animate {
+  display: inline-block;
+  opacity: 0;
+  animation: bounceIn 0.8s 0.8s;
+  animation-fill-mode: forwards;
+  cursor: context-menu;
+}
+
+.text {
+  display: inline-block;
+  text-align: center;
+  overflow-wrap: break-word; 
+  color: white;
+}
+
+.text-animate-hover {
+  animation-fill-mode: both;
+  animation: rubberBand 1s;
+}

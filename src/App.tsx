@@ -1,24 +1,17 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import "animate.css";
+import Game from "./components/Game/Game";
+import SmokeBackground from "./components/SmokeBackground/SmokeBackground";
+import StarfallBackground from "./components/StarfallBackground/StarfallBackground";
 
 function App() {
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="relative h-screen w-screen p-3 flex justify-center overflow-hidden bg-slate-100">
+      <div className="z-50 w-full h-full flex justify-center">
+        <Game />
+      </div>
+      <SmokeBackground />
+      <StarfallBackground />
     </div>
   );
 }

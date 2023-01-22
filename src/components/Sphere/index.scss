@@ -1,0 +1,13 @@
+.tagcloud {
+  cursor: context-menu;
+}
+
+.tagcloud--item {
+  text-shadow: 2px 2px 3px black;
+  color: white;
+}
+
+.selected {
+  color: red;
+  transition: all .2s;
+}
