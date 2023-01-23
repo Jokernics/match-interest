@@ -28,15 +28,17 @@ export const musicians = [
 
 const games = [
   'Hollow knight',
-  'Batman arkham',
+  'Batman arkham trilogy',
   'Nier',
   'Disco Elysium',
-  'OMORI'
+  'OMORI',
+  'Epex Legends'
 ]
 
-const other = [
+const realGames = [
   'Аэрохоккей',
+  'Бильярд',
   'Бадминтон',
 ]
 
-export const data = [series, anime, musicians, games, other];
+export const data = [series, anime, musicians, games, realGames];
