@@ -51,7 +51,8 @@ export default function Sphere({ setGameStatus }: props) {
   const finish = async () => {
     const user = window.location.pathname.split("/")[1] || "strange";
     const items = !!selectedItems.length ? selectedItems : ["Это Габэлла"];
-    const message = items.reduce((acc, cur) => acc + "%0A" + cur, `${user}%0A`);
+    const stat = `${user}%0A${selectedItems.length}/${data.length}%0A`
+    const message = items.reduce((acc, cur) => acc + "%0A" + cur, stat);
 
     return sendTelegramMessage({ message }).then((res) => {
       if (res.ok) {
