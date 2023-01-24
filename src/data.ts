@@ -13,6 +13,11 @@ export const anime = [
   'Тетрадь смерти',
   'Hunter x Hunter',
   'Стальной алхимик',
+  'Mo6 Психо 100',
+]
+
+export const manga = [
+  'Человек-бензопила'
 ]
 
 export const musicians = [
@@ -41,4 +46,8 @@ const realGames = [
   'Бадминтон',
 ]
 
-export const data = [series, anime, musicians, games, realGames];
+const other = [
+  'Jack Daniel`s'
+]
+
+export const data = [series, anime, manga, musicians, games, realGames, other];

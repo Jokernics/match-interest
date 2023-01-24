@@ -1,6 +1,7 @@
 import "animate.css";
-import { createBrowserRouter, Navigate, NavLink, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom";
 import Layout from "./components/Layout/Layout";
+import RequireAuth from "./components/shared/RequireAuth/RequireAuth";
 import Game from "./pages/ChoisePage/Game/Game";
 import MainPage from "./pages/MainPage/MainPage";
 import ProfilePage from "./pages/ProfilePage/ProfilePage";
@@ -15,7 +16,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/profile",
-        element: <ProfilePage />,
+        element: <RequireAuth><ProfilePage /></RequireAuth>,
       },
       {
         path: "/match",
@@ -30,6 +31,7 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
+
   return <RouterProvider router={router} />;
 }
 
