@@ -1,6 +1,6 @@
 import { useState } from "react";
-import AnimatedLetters from "../AnimatedLetters/AnimatedLetters";
 import Description from "../Description/Description";
+import AnimatedLetters from "../../../components/shared/AnimatedLetters/AnimatedLetters";
 import Sphere from "../Sphere/Sphere";
 
 export default function Game() {

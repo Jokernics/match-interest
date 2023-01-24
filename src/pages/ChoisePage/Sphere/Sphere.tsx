@@ -1,9 +1,9 @@
 import { TagCloud } from "@frank-mayer/react-tag-cloud";
 import { useCallback, useMemo, useState } from "react";
-import { data } from "../../data";
-import { useFetch } from "../../hooks/useFetch";
-import { sendTelegramMessage } from "../../utils/utils";
-import RoundedButton from "../shared/RoundedButton/RoundedButton";
+import { data } from "../../../data";
+import { useFetch } from "../../../hooks/useFetch";
+import { sendTelegramMessage } from "../../../utils/utils";
+import RoundedButton from "../../../components/shared/RoundedButton/RoundedButton";
 import "./index.scss";
 
 type props = {

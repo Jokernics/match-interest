@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import AnimatedLetters from "../AnimatedLetters/AnimatedLetters";
-import RoundedButton from "../shared/RoundedButton/RoundedButton";
+import AnimatedLetters from "../../../components/shared/AnimatedLetters/AnimatedLetters";
+import RoundedButton from "../../../components/shared/RoundedButton/RoundedButton";
 
 type props = {
   setGameStatus: React.Dispatch<React.SetStateAction<string>>;

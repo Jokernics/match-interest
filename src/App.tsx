@@ -1,19 +1,36 @@
 import "animate.css";
-import Game from "./components/Game/Game";
-import SmokeBackground from "./components/SmokeBackground/SmokeBackground";
-import StarfallBackground from "./components/StarfallBackground/StarfallBackground";
+import { createBrowserRouter, Navigate, NavLink, RouterProvider } from "react-router-dom";
+import Layout from "./components/Layout/Layout";
+import Game from "./pages/ChoisePage/Game/Game";
+import MainPage from "./pages/MainPage/MainPage";
+import ProfilePage from "./pages/ProfilePage/ProfilePage";
+
+const router = createBrowserRouter([
+  {
+    element: <Layout />,
+    children: [
+      {
+        path: "/",
+        element: <MainPage />,
+      },
+      {
+        path: "/profile",
+        element: <ProfilePage />,
+      },
+      {
+        path: "/match",
+        element: <Game />,
+      },
+      {
+        path: "*",
+        element: <Navigate to={"/"} />,
+      },
+    ],
+  },
+]);
 
 function App() {
-
-  return (
-    <div className="relative h-screen w-screen p-3 flex justify-center overflow-hidden bg-slate-100">
-      <div className="z-50 w-full h-full flex justify-center">
-        <Game />
-      </div>
-      <SmokeBackground />
-      <StarfallBackground />
-    </div>
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;
