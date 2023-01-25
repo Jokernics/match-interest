@@ -1,47 +1,21 @@
-import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import React from "react";
-import { useNavigate } from "react-router";
-import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
-import { setCredential } from "../../../../app/slices/authSlice";
+import { GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { NavLink } from "react-router-dom";
 import { auth } from "../../../../firebase";
 
-export default function Auth() {
+const login = () => {
   const provider = new GoogleAuthProvider();
-  const dispatch = useAppDispatch();
-  const token = useAppSelector((state) => state.auth.token);
-  const navigate = useNavigate()
+  signInWithPopup(auth, provider);
+};
+const logout = () => {
+  signOut(auth);
+};
 
-  const signIn = () => {
-    signInWithPopup(auth, provider)
-      .then((result) => {
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        const token = credential!.accessToken;
-        // The signed-in user info.
-        const user = result.user;
-        dispatch(setCredential({ token: user.uid }));
-        navigate('/profile')
-      })
-      .catch((error) => {
-        // Handle Errors here.
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        // The email of the user's account used.
-        const email = error.customData.email;
-        // The AuthCredential type that was used.
-        const credential = GoogleAuthProvider.credentialFromError(error);
-        // ...
-        console.log("error", `${errorCode}: ${errorMessage}`);
-      });
-  };
+export default function Auth() {
+  const [user, loading, error] = useAuthState(auth);
 
-  const handleAuth = () => {
-    if (token) {
-      navigate('/profile')
-    } else {
-      signIn()
-    }
-    
-  }
+  if (!user)
+    return <button onClick={login}>{loading ? "loading..." : "Log In"}</button>;
 
-  return <button onClick={handleAuth}>Профиль</button>;
+  return <NavLink to='/profile'>K профилю</NavLink>
 }

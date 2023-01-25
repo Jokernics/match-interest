@@ -1,11 +1,13 @@
+import { signOut } from 'firebase/auth';
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { auth } from '../../firebase';
 
 export interface authState {
   token: string | null;
 }
 
 const initialState: authState = {
-  token: null,
+  token: localStorage.getItem("token") || null,
 };
 
 export const authSlice = createSlice({
@@ -16,10 +18,13 @@ export const authSlice = createSlice({
       const token = action.payload.token;
       if (token) {
         state.token = token;
+        localStorage.setItem("token", token);
       }
     },
     logOut: (state) => {
+      signOut(auth)
       state.token = null;
+      localStorage.removeItem("token");
     },
   },
 });
