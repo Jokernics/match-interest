@@ -16,7 +16,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/profile",
-        element: <RequireAuth><ProfilePage /></RequireAuth>,
+        element: (
+          <RequireAuth>
+            <ProfilePage />
+          </RequireAuth>
+        ),
       },
       {
         path: "/match",
@@ -31,7 +35,6 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-
   return <RouterProvider router={router} />;
 }
 
