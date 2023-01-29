@@ -26,9 +26,9 @@ export default function Description({ setGameStatus }: props) {
         animate__animated ${animation}
     `}
     >
-      <h1 className="uppercase">
+      <h2 className="uppercase">
         <AnimatedLetters animationTimeDivider={25} start={4} word={phrase1} />
-      </h1>
+      </h2>
       <h2>
         <AnimatedLetters
           animationTimeDivider={25}

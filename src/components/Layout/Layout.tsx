@@ -13,7 +13,7 @@ export default function Layout() {
         </div>
       </div>
       <SmokeBackground />
-      {/* <StarfallBackground /> */}
+      <StarfallBackground />
     </div>
   );
 }
