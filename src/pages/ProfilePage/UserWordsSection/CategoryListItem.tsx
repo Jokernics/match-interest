@@ -28,7 +28,7 @@ export default function CategoryListItem({
 
   return (
     <div className="flex gap-2">
-      <h5 className="rounded flex items-center justify-center bg-amber-400 px-4 py-1 shrink-0">
+      <h5 className="rounded flex items-center justify-center bg-amber-400 px-4 py-1 shrink-0 text-slate-800">
         {categoryName}
       </h5>
       <button className="translate-y-[-3px] px-2 text-4xl" onClick={addNewWord}>

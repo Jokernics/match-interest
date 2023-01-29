@@ -10,9 +10,15 @@ type props = {
   setGameStatus: React.Dispatch<React.SetStateAction<string>>;
   words: string[];
   userId: string;
+  guestName: string;
 };
 
-export default function Sphere({ setGameStatus, words, userId }: props) {
+export default function Sphere({
+  setGameStatus,
+  words,
+  userId,
+  guestName,
+}: props) {
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
   const [isFinish, setIsFinish] = useState(false);
   const [counter, setCounter] = useState(0);
@@ -69,13 +75,18 @@ export default function Sphere({ setGameStatus, words, userId }: props) {
     const message = items.reduce((acc, cur) => acc + "%0A" + cur, stat);
 
     const result = {
-      egorchik: {
+      [guestName]: {
         total: words.length,
         answers: selectedItems,
       },
     };
 
     await updateGuestResult(result, userId);
+    setIsFinish(true);
+
+    setTimeout(() => {
+      setGameStatus("ended");
+    }, 800);
 
     // return sendTelegramMessage({ message }).then((res) => {
     //   if (res.ok) {
@@ -117,12 +128,7 @@ export default function Sphere({ setGameStatus, words, userId }: props) {
         style={{ animationDelay: isFinish ? "0s" : ".7s" }}
       >
         {error && <p className="text-yellow-400">Произошла ошибка {error}</p>}
-        <RoundedButton
-          onClick={() =>
-            makeReq(finish)
-          }
-          isLoading={isLoading}
-        >
+        <RoundedButton onClick={() => makeReq(finish)} isLoading={isLoading}>
           Закончить
         </RoundedButton>
         <h2 className="text-white">{counter}</h2>

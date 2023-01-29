@@ -63,7 +63,7 @@ export default function WordsListItem({
         </h5>
       )}
       {!isEditingMode && (
-        <button onClick={deleteWord} className="text-xs">
+        <button onClick={deleteWord} className="text-sm">
           &#10060;
         </button>
       )}

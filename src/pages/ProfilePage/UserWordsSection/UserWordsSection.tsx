@@ -1,5 +1,5 @@
 import { doc } from "firebase/firestore";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { useDocument } from "react-firebase-hooks/firestore";
 import { db } from "../../../firebase";
 import EditingSection from "./EditingSection";
@@ -19,13 +19,13 @@ export default function UserWordsSection({ uid }: props) {
         : [],
     [res]
   );
-
+  
   if (loading) return <Loader />;
 
   if (error) return <h2>{JSON.stringify(error)}</h2>;
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col gap-4">
       <EditingSection bdData={data} />
       <GameLink {...{ uid }} />
     </div>

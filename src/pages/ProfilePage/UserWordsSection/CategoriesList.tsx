@@ -12,7 +12,7 @@ export default function CategoriesList({ data, setData }: props) {
   if (!data.length) return <h2>Слов нет, добавьте категорию</h2>
  
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-col gap-3 ">
       {data.map((category, categoryIndex) => (
         <CategoryListItem
           key={categoryIndex}

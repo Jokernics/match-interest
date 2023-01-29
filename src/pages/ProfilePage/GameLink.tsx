@@ -17,7 +17,7 @@ export default function GameLink({ uid }: props) {
   return (
     <div className="flex flex-col gap-3">
       <h5>Ссылка на игру: </h5>
-      <h5>{url}</h5>
+      <h5 className="truncate">{url}</h5>
       <div className="flex gap-3">
         <RoundedButton onClick={() => navigate(`/match/${uid}`)}>
           Перейти

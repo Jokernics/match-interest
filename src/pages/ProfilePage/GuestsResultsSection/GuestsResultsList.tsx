@@ -7,7 +7,7 @@ type props = {
 
 export default function GuestsResultsList({results}: props) {
   return (
-    <div className="flex gap-3 flex-wrap">
+    <div className="flex gap-3 flex-wrap pb-4">
       {results.map((result, index) => 
         <GuestResultListItem key={index} {...{result, index}} />
       )}
