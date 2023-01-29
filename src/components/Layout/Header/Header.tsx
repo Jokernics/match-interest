@@ -8,7 +8,7 @@ const links = [{ to: "/", name: "Домой" }];
 
 export default function Header() {
   return (
-    <div className="fixed top-0 flex w-full justify-end text-white gap-2 pt-2 pr-4">
+    <div className="p-3 flex w-full justify-end text-white gap-2 pt-2 pr-4">
       {links.map((link) => (
         <Link key={link.name} to={link.to}>
           {link.name}

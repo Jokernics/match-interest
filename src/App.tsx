@@ -2,7 +2,7 @@ import "animate.css";
 import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom";
 import Layout from "./components/Layout/Layout";
 import RequireAuth from "./components/shared/RequireAuth/RequireAuth";
-import Game from "./pages/ChoisePage/Game/Game";
+import GamePage from "./pages/GamePage/GamePage";
 import MainPage from "./pages/MainPage/MainPage";
 import ProfilePage from "./pages/ProfilePage/ProfilePage";
 
@@ -23,8 +23,8 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "/match",
-        element: <Game />,
+        path: "match/:userId",
+        element: <GamePage />,
       },
       {
         path: "*",

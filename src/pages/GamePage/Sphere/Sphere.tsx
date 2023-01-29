@@ -1,21 +1,35 @@
 import { TagCloud } from "@frank-mayer/react-tag-cloud";
-import { useCallback, useMemo, useState } from "react";
-import { data } from "../../data";
-import { useFetch } from "../../hooks/useFetch";
-import { sendTelegramMessage } from "../../utils/utils";
-import RoundedButton from "../shared/RoundedButton/RoundedButton";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { data } from "../../../data";
+import { useFetch } from "../../../hooks/useFetch";
+import { sendTelegramMessage, updateGuestResult } from "../../../utils/utils";
+import RoundedButton from "../../../components/shared/RoundedButton/RoundedButton";
 import "./index.scss";
 
 type props = {
   setGameStatus: React.Dispatch<React.SetStateAction<string>>;
+  words: string[];
+  userId: string;
 };
 
-export default function Sphere({ setGameStatus }: props) {
+export default function Sphere({ setGameStatus, words, userId }: props) {
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [isFinish, setIsFinish] = useState(false);
   const [counter, setCounter] = useState(0);
+  const calcRadius = () =>
+    Math.min(window.innerWidth, window.innerHeight) / 1.7;
+  const [radius, setRadius] = useState(calcRadius());
   const { makeReq, isLoading, error } = useFetch();
+
+  useEffect(() => {
+    const handleResize = () => {
+      setRadius(calcRadius());
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const sphereAnimation = useMemo(
     () => (isFinish ? "animate__zoomOut" : "animate__zoomIn"),
@@ -51,42 +65,48 @@ export default function Sphere({ setGameStatus }: props) {
   const finish = async () => {
     const user = window.location.pathname.split("/")[1] || "strange";
     const items = !!selectedItems.length ? selectedItems : ["Это Габэлла"];
-    const stat = `${user}: ${selectedItems.length}/${data.flat().length}%0A`
+    const stat = `${user}: ${selectedItems.length}/${data.flat().length}%0A`;
     const message = items.reduce((acc, cur) => acc + "%0A" + cur, stat);
 
-    return sendTelegramMessage({ message }).then((res) => {
-      if (res.ok) {
-        setIsFinish(true);
+    const result = {
+      egorchik: {
+        total: words.length,
+        answers: selectedItems,
+      },
+    };
 
-        setTimeout(() => {
-          setGameStatus("ended");
-        }, 800);
-      } else {
-        throw res;
-      }
-    });
+    await updateGuestResult(result, userId);
+
+    // return sendTelegramMessage({ message }).then((res) => {
+    //   if (res.ok) {
+    //     setIsFinish(true);
+
+    //     setTimeout(() => {
+    //       setGameStatus("ended");
+    //     }, 800);
+    //   } else {
+    //     throw res;
+    //   }
+    // });
   };
 
-  const Cloud = useMemo(() => {
-    // const words = windowWidth < 400 ? data : [data.flat()];
-    const words = [data.flat()];
-
-    return words.map((data, i) => (
+  const Cloud = useMemo(
+    () => (
       <TagCloud
-        key={i}
         options={(w: Window & typeof globalThis) => ({
-          radius: Math.min(w.innerWidth, w.innerHeight) / 1.8,
+          radius: radius,
           maxSpeed: "normal",
           initSpeed: "fast",
           direction: "110",
         })}
         onClick={handleClick}
-        onClickOptions={{ passive: true}}
+        onClickOptions={{ passive: true }}
       >
-        {data}
+        {words}
       </TagCloud>
-    ));
-  }, [handleClick]);
+    ),
+    [handleClick, radius, words]
+  );
 
   return (
     <div className="w-full h-full flex flex-col justify-center items-center select-none relative">
@@ -97,7 +117,12 @@ export default function Sphere({ setGameStatus }: props) {
         style={{ animationDelay: isFinish ? "0s" : ".7s" }}
       >
         {error && <p className="text-yellow-400">Произошла ошибка {error}</p>}
-        <RoundedButton onClick={() => makeReq(finish())} isLoading={isLoading}>
+        <RoundedButton
+          onClick={() =>
+            makeReq(finish)
+          }
+          isLoading={isLoading}
+        >
           Закончить
         </RoundedButton>
         <h2 className="text-white">{counter}</h2>

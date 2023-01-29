@@ -1,27 +1,14 @@
-import { addDoc, collection, doc } from "@firebase/firestore";
-import { db } from "../../firebase";
+import { auth } from "../../firebase";
+import GuestsResultsSection from "./GuestsResultsSection/GuestsResultsSection";
+import UserWordsSection from "./UserWordsSection/UserWordsSection";
 
 export default function ProfilePage() {
+  const uid = auth.currentUser?.uid!;
+
   return (
-    <div>
-      <h5>Progile page</h5>
-      <button
-        onClick={async () => {
-          try {
-            const wordsDocumentRef = doc(db, "words/userid2");
-            const docRef = await addDoc(collection(db, "users"), {
-              first: "Adwa",
-              last: "Lovelace",
-              born: 1815,
-            });
-            console.log("Document written with ID: ", docRef.id);
-          } catch (e) {
-            console.error("Error adding document: ", e);
-          }
-        }}
-      >
-        Send Data
-      </button>
+    <div className="h-full w-full flex flex-col gap-4" style={{fontSize: '1.1em'}}>
+      <UserWordsSection {...{uid}} />
+      <GuestsResultsSection {...{uid}} />
     </div>
   );
 }

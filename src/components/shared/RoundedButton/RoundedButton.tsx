@@ -1,7 +1,7 @@
 import Loader from "../Loader/Loader";
 
 type props = {
-  onClick: () => void;
+  onClick?: () => void;
   children: string;
   className?: string;
   style?: {};
@@ -18,8 +18,8 @@ export default function RoundedButton({
   return (
     <button
       style={style}
-      onClick={() => !isLoading && onClick()}
-      className={`rounded flex justify-center items-center bg-slate-200 px-2 hover:bg-slate-500 transition-all ${
+      onClick={() => !isLoading && onClick && onClick()}
+      className={`rounded w-fit text-black flex justify-center items-center bg-slate-200 px-2 hover:bg-slate-500 transition-all ${
         className ? className : ""
       }`}
     >

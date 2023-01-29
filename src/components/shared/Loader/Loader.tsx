@@ -2,6 +2,6 @@ import './index.scss'
 
 export default function Loader() {
   return (
-    <span className="loader"></span>
+    <span className="loader mx-auto"></span>
   )
 }

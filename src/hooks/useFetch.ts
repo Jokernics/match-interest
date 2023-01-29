@@ -1,15 +1,20 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
 export const useFetch = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const makeReq = (fetchReq: (Promise<void>)) => {
+  const makeReq = async (fetchReq: () => Promise<void>) => {
     setIsLoading(true);
     setError("");
-    fetchReq
-      .catch((err) => setError(`${err.status || ""} ${err.statusText || ""}`))
-      .finally(() => setIsLoading(false));
+    try {
+      await fetchReq();
+    } catch (err: any) {
+      const fetchErr = `${err.status || ""} ${err.statusText || ""}`;
+      setError(err.message || fetchErr);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return { makeReq, isLoading, error };

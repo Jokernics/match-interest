@@ -12,5 +12,9 @@ body {
   font-family: 'Caveat', cursive;
   font-weight: 600;
   font-size: 1.2em;
-  color: white;;
+  color: white;
+}
+
+input {
+  color: black
 }

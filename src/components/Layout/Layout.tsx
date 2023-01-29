@@ -5,13 +5,15 @@ import Header from "./Header/Header";
 
 export default function Layout() {
   return (
-    <div className="relative h-screen w-screen p-3 flex justify-center overflow-hidden bg-slate-100">
-      <div className="z-50 w-full h-full flex justify-center">
+    <div className="relative h-screen w-screen flex justify-center overflow-hidden bg-slate-100">
+      <div className="z-50 w-full h-full flex flex-col flex-grow overflow-auto">
         <Header />
-        <Outlet />
+        <div className="flex grow overflow-auto flex-col px-4">
+          <Outlet />
+        </div>
       </div>
       <SmokeBackground />
-      <StarfallBackground />
+      {/* <StarfallBackground /> */}
     </div>
   );
 }
