@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import AnimatedLetters from "../../components/shared/AnimatedLetters/AnimatedLetters";
-import RoundedButton from "../../components/shared/RoundedButton/RoundedButton";
+import AnimatedLetters from "../../../components/shared/AnimatedLetters/AnimatedLetters";
+import RoundedButton from "../../../components/shared/RoundedButton/RoundedButton";
 
 type props = {
   setGameStatus: React.Dispatch<React.SetStateAction<string>>;
 };
 
-export default function Description({ setGameStatus }: props) {
+export default function DescriptionStage({ setGameStatus }: props) {
   const [animation, setAnimation] = useState("");
   const handleStart = () => {
     setAnimation("animate__zoomOutDown");

@@ -1,4 +1,4 @@
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { ReactComponent as HomeIcon } from "../../../assets/images/home.svg";
 import { ReactComponent as ProfileIcon } from "../../../assets/images/profile.svg";
 
@@ -9,7 +9,7 @@ const links = [
 
 export default function Header() {
   return (
-    <div className="p-3 flex w-full justify-end text-white gap-2 pt-2 pr-4 ">
+    <div className="flex w-full justify-end text-white gap-2 mb-3">
       {links.map((link, i) => (
         <NavLink
           style={({ isActive }) => (isActive ? { fill: "#476a9a" } : {})}

@@ -1,7 +1,8 @@
 import { SyntheticEvent, useMemo, useState } from "react";
+import MyInput from "../../../components/shared/MyInput";
 import RoundedButton from "../../../components/shared/RoundedButton/RoundedButton";
 import { categoryType, wordsType } from "../../../types/types";
-import { getRandomColor, getRandomRgba, hexToRgb } from "../../../utils/utils";
+import { getRandomRgba } from "../../../utils/utils";
 import WordsList from "./WordsList";
 
 type props = {
@@ -23,6 +24,8 @@ export default function CategoryListItem({
 
   const addNewWord = (e: SyntheticEvent) => {
     e.preventDefault();
+
+    if (!newWord.trim().length) return;
 
     let words = category[categoryName];
     words = [...words, newWord];
@@ -49,7 +52,7 @@ export default function CategoryListItem({
     >
       <div className="flex gap-2 flex-col sm:flex-row">
         <div className="relative w-fit flex">
-          <h5 className="rounded bg-amber-400 px-2 py-1 text-slate-800">
+          <h5 className="rounded bg-amber-400 pl-2 pr-4 py-1 text-slate-800">
             {categoryIndex + 1}. {categoryName}
           </h5>
           <button
@@ -60,9 +63,8 @@ export default function CategoryListItem({
           </button>
         </div>
         <form onSubmit={addNewWord} className="flex flex-wrap gap-2">
-          <input
+          <MyInput
             placeholder="Новое слово"
-            className="rounded outline-none px-2"
             value={newWord}
             onChange={(e) => setNewWord(e.target.value)}
             type="search"

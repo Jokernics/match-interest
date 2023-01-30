@@ -11,6 +11,7 @@ type props = {
   words: string[];
   userId: string;
   guestName: string;
+  isAnimation?: boolean;
 };
 
 export default function Sphere({
@@ -18,12 +19,13 @@ export default function Sphere({
   words,
   userId,
   guestName,
+  isAnimation = true,
 }: props) {
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
   const [isFinish, setIsFinish] = useState(false);
   const [counter, setCounter] = useState(0);
   const calcRadius = () =>
-    Math.min(window.innerWidth, window.innerHeight) / 1.7;
+    Math.min(window.innerWidth, window.innerHeight) / 2.5;
   const [radius, setRadius] = useState(calcRadius());
   const { makeReq, isLoading, error } = useFetch();
 
@@ -38,12 +40,12 @@ export default function Sphere({
   }, []);
 
   const sphereAnimation = useMemo(
-    () => (isFinish ? "animate__zoomOut" : "animate__zoomIn"),
-    [isFinish]
+    () => isAnimation && (isFinish ? "animate__zoomOut" : "animate__zoomIn"),
+    [isAnimation, isFinish]
   );
   const buttonAnimation = useMemo(
-    () => (isFinish ? "animate__fadeOut" : "animate__fadeIn"),
-    [isFinish]
+    () => isAnimation && (isFinish ? "animate__fadeOut" : "animate__fadeIn"),
+    [isAnimation, isFinish]
   );
 
   const handleClick = useCallback((tag: string, event: MouseEvent) => {
@@ -68,7 +70,7 @@ export default function Sphere({
     }
   }, []);
 
-  const finish = async () => {
+  const finish = useCallback(async () => {
     const user = window.location.pathname.split("/")[1] || "strange";
     const items = !!selectedItems.length ? selectedItems : ["Это Габэлла"];
     const stat = `${user}: ${selectedItems.length}/${data.flat().length}%0A`;
@@ -99,7 +101,7 @@ export default function Sphere({
     //     throw res;
     //   }
     // });
-  };
+  }, [guestName, selectedItems, setGameStatus, userId, words.length]);
 
   const Cloud = useMemo(
     () => (
@@ -120,7 +122,7 @@ export default function Sphere({
   );
 
   return (
-    <div className="w-full h-full flex flex-col justify-center items-center select-none relative">
+    <div className="flex flex-col grow justify-center items-center select-none relative">
       <div
         className={`absolute right-5 top-0 z-20 flex justify-center items-center gap-3 mt-2
           animate__animated ${buttonAnimation}

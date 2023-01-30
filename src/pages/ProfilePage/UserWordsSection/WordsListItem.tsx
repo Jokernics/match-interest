@@ -1,4 +1,5 @@
 import { ChangeEvent, useState } from "react";
+import MyInput from "../../../components/shared/MyInput";
 import { wordsType } from "../../../types/types";
 
 type props = {
@@ -38,12 +39,11 @@ export default function WordsListItem({
   return (
     <div className="h-9 rounded bg-slate-600 pr-2 flex justify-center items-center overflow-hidden relative">
       {isEditingMode ? (
-        <input
+        <MyInput
           onBlur={() => setIsEditingMode(false)}
           autoFocus
           onChange={editWord}
           value={word}
-          className="h-full outline-none bg-inherit text-white px-2"
           size={word.length - 1 < 1 ? 2 : word.length - 1}
         />
       ) : (

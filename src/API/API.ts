@@ -40,23 +40,21 @@ export default class Api {
   }
 
   static async updateGuestResult(result: guestType, userId: string) {
-    if (auth.currentUser && auth.currentUser.uid) {
+    try {
+      const docRef = await updateDoc(doc(db, "results", userId), {
+        guests: arrayUnion(result),
+      });
+      console.log("Document written with ID: ", docRef);
+    } catch (e) {
+      console.error("Error adding document: ", e);
       try {
-        const docRef = await updateDoc(doc(db, "results", userId), {
+        const docRef = await setDoc(doc(db, "results", userId), {
           guests: arrayUnion(result),
         });
         console.log("Document written with ID: ", docRef);
-      } catch (e) {
-        console.error("Error adding document: ", e);
-        try {
-          const docRef = await setDoc(doc(db, "results", userId), {
-            guests: arrayUnion(result),
-          });
-          console.log("Document written with ID: ", docRef);
-        } catch (error) {
-          console.error("Error adding document: ", error);
-          throw Error("Произошла ошибка");
-        }
+      } catch (error) {
+        console.error("Error adding document: ", error);
+        throw Error("Произошла ошибка");
       }
     }
   }

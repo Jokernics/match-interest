@@ -1,6 +1,5 @@
 import { ReactElement } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { Navigate } from "react-router";
 import Api from "../../../API/API";
 import { auth } from "../../../firebase";
 import Loader from "../Loader/Loader";
@@ -27,5 +26,5 @@ export default function RequireAuth({ children }: props) {
 
   if (user) return children;
 
-  return <h5>Произошла непредвиденная ошибка</h5>
+  return <h5>Произошла непредвиденная ошибка</h5>;
 }

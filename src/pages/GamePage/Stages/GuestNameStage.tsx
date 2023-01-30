@@ -1,12 +1,13 @@
 import { SyntheticEvent, useMemo, useState } from "react";
-import RoundedButton from "../../components/shared/RoundedButton/RoundedButton";
+import MyInput from "../../../components/shared/MyInput";
+import RoundedButton from "../../../components/shared/RoundedButton/RoundedButton";
 
 type props = {
   guestName: React.MutableRefObject<string>;
   setGameStatus: React.Dispatch<React.SetStateAction<string>>;
 };
 
-export default function GuestNameEntry({ guestName, setGameStatus }: props) {
+export default function GuestNameStage({ guestName, setGameStatus }: props) {
   const [name, setName] = useState("");
   const [isClosed, setIsClosed] = useState(false);
 
@@ -17,7 +18,7 @@ export default function GuestNameEntry({ guestName, setGameStatus }: props) {
 
     setTimeout(() => {
       guestName.current = name;
-      setGameStatus("description");
+      setGameStatus("started");
     }, 200);
   };
 
@@ -39,16 +40,15 @@ export default function GuestNameEntry({ guestName, setGameStatus }: props) {
       <div className="px-6 py-6 flex flex-col gap-3 bg-slate-800 rounded-md">
         <h2>Введите свое имя:</h2>
         <form onSubmit={setGuestName} className="flex gap-3">
-          <input
+          <MyInput
             autoFocus
-            className="px-2 outline-none rounded"
             placeholder="Имя"
             size={15}
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
-          <RoundedButton>Сохранить</RoundedButton>
+          <RoundedButton>Начать</RoundedButton>
         </form>
       </div>
     </div>

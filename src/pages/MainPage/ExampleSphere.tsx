@@ -37,7 +37,10 @@ export default function ExampleSphere() {
     }
   }, []);
   return (
-   <div className="flex flex-col items-center justify-center grow">
+    <div
+      className="flex flex-col items-center justify-center grow overflow-clip"
+      style={{ height: calcRadius() }}
+    >
       <TagCloud
         options={(w: Window & typeof globalThis) => ({
           radius: radius,
@@ -51,6 +54,6 @@ export default function ExampleSphere() {
       >
         {data.flat()}
       </TagCloud>
-   </div>
+    </div>
   );
 }

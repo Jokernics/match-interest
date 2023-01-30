@@ -1,20 +1,20 @@
 import { useRef, useState } from "react";
-import Description from "./Description";
-import EndScreen from "./EndScreen";
-import GuestNameEntry from "./GuestNameEntry";
 import Sphere from "./Sphere/Sphere";
+import DescriptionStage from "./Stages/DescriptionStage";
+import FarewellStage from "./Stages/FarewellStage";
+import GuestNameStage from "./Stages/GuestNameStage";
 
 type props = {
   words: string[];
   userId: string;
 };
 
-export default function Game({ words, userId }: props) {
+export default function GameStages({ words, userId }: props) {
   const [gameStatus, setGameStatus] = useState("guestNameEntry");
   const guestName = useRef<string>("");
 
   if (gameStatus === "description")
-    return <Description {...{ setGameStatus }} />;
+    return <DescriptionStage {...{ setGameStatus }} />;
 
   if (gameStatus === "started")
     return (
@@ -23,7 +23,7 @@ export default function Game({ words, userId }: props) {
         guestName={guestName.current}
       />
     );
-  if (gameStatus === "ended") return <EndScreen />;
+  if (gameStatus === "ended") return <FarewellStage />;
 
-  return <GuestNameEntry {...{ guestName, setGameStatus }} />;
+  return <GuestNameStage {...{ guestName, setGameStatus }} />;
 }

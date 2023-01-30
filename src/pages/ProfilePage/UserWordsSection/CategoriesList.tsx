@@ -1,4 +1,3 @@
-import { useMemo } from "react";
 import { wordsType } from "../../../types/types";
 import CategoryListItem from "./CategoryListItem";
 
@@ -14,7 +13,7 @@ export default function CategoriesList({ data, setData }: props) {
     <div className="flex flex-col gap-3 overflow-auto">
       {data.map((category, categoryIndex) => (
         <CategoryListItem
-          key={categoryIndex}
+          key={Object.keys(category)[0]}
           {...{ category, data, setData, categoryIndex }}
         />
       ))}

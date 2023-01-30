@@ -4,7 +4,7 @@ import { useDocument } from "react-firebase-hooks/firestore";
 import { useParams } from "react-router";
 import { db } from "../../firebase";
 import { transformResponseWords } from "../../utils/utils";
-import Game from "./Game";
+import GameStages from "./GameStages";
 
 export default function GamePage() {
   let { userId } = useParams() as { userId: string };
@@ -19,8 +19,8 @@ export default function GamePage() {
   if (!words.length) return <h2 className="mx-auto">Ничего не найдено</h2>;
 
   return (
-    <div className="flex flex-col flex-grow">
-      {!!words.length && <Game {...{ words, userId }} />}
+    <div className="flex flex-col grow">
+      {!!words.length && <GameStages {...{ words, userId }} />}
     </div>
   );
 }
