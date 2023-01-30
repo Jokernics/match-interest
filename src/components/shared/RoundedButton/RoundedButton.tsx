@@ -1,8 +1,9 @@
+import { ReactElement } from "react";
 import Loader from "../Loader/Loader";
 
 type props = {
   onClick?: () => void;
-  children: string;
+  children: string | ReactElement;
   className?: string;
   style?: {};
   isLoading?: boolean;

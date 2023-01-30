@@ -9,9 +9,9 @@ export default function StarfallBackground() {
     i: number,
     animation: React.AnimationEvent<HTMLDivElement>
   ) => {
-    console.log(animation)
+    // console.log(animation)
     if (animation.animationName === "fall") {
-      console.log('yes')
+      // console.log('yes')
       setStars((prev) =>
         prev.map((j) => {
           if (i === j) return j + 9;

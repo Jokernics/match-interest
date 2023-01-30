@@ -6,6 +6,7 @@ type props = {
   data: wordsType;
   setData: React.Dispatch<React.SetStateAction<wordsType>>;
   categoryIndex: number;
+  maxCategoryWidth: number
 };
 
 export default function CategoryListItem({
@@ -13,6 +14,7 @@ export default function CategoryListItem({
   data,
   setData,
   categoryIndex,
+  maxCategoryWidth
 }: props) {
   const categoryName = Object.keys(category)[0];
   const words = category[categoryName];
@@ -28,7 +30,9 @@ export default function CategoryListItem({
 
   return (
     <div className="flex gap-2">
-      <h5 className="rounded flex items-center justify-center bg-amber-400 px-4 py-1 shrink-0 text-slate-800">
+      <h5 className="rounded flex items-center justify-center bg-amber-400 px-4 py-1 shrink-0 text-slate-800"
+        style={{width: maxCategoryWidth * 12}}
+      >
         {categoryName}
       </h5>
       <button className="translate-y-[-3px] px-2 text-4xl" onClick={addNewWord}>

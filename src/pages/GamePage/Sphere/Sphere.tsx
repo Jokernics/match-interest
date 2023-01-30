@@ -2,9 +2,9 @@ import { TagCloud } from "@frank-mayer/react-tag-cloud";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { data } from "../../../data";
 import { useFetch } from "../../../hooks/useFetch";
-import { sendTelegramMessage, updateGuestResult } from "../../../utils/utils";
 import RoundedButton from "../../../components/shared/RoundedButton/RoundedButton";
 import "./index.scss";
+import Api from "../../../API/API";
 
 type props = {
   setGameStatus: React.Dispatch<React.SetStateAction<string>>;
@@ -81,7 +81,7 @@ export default function Sphere({
       },
     };
 
-    await updateGuestResult(result, userId);
+    await Api.updateGuestResult(result, userId);
     setIsFinish(true);
 
     setTimeout(() => {

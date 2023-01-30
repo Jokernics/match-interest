@@ -1,19 +1,5 @@
-import { arrayUnion, doc, updateDoc } from "@firebase/firestore";
-import { DocumentData, DocumentSnapshot, setDoc } from "firebase/firestore";
-import { auth, db } from "../firebase";
-import { guestType, wordsType } from "./../types/types";
-
-export const sendTelegramMessage = ({ message }: { message: string }) => {
-  const token = process.env.REACT_APP_TOKEN;
-  const chatID = process.env.REACT_APP_CHAT_ID;
-
-  return fetch(
-    `https://api.telegram.org/bot${token}/sendMessage?chat_id=${chatID}&text=${message}`,
-    {
-      method: "GET",
-    }
-  );
-};
+import { DocumentData, DocumentSnapshot } from "firebase/firestore";
+import { wordsType } from "./../types/types";
 
 export const transformResponseWords = (
   res: DocumentSnapshot<DocumentData> | undefined
@@ -32,38 +18,5 @@ export const transformResponseWords = (
   }
 };
 
-export const updateUserWords = async (words: wordsType) => {
-  if (auth.currentUser && auth.currentUser.uid) {
-    try {
-      const docRef = await setDoc(doc(db, "words", auth.currentUser.uid), {
-        categories: words,
-      });
-      console.log("Document written with ID: ", docRef);
-    } catch (e) {
-      console.error("Error adding document: ", e);
-      throw Error(JSON.stringify(e))
-    }
-  }
-};
 
-export const updateGuestResult = async (result: guestType, userId: string) => {
-  if (auth.currentUser && auth.currentUser.uid) {
-    try {
-      const docRef = await updateDoc(doc(db, "results", userId), {
-        guests: arrayUnion(result),
-      });
-      console.log("Document written with ID: ", docRef);
-    } catch (e) {
-      console.error("Error adding document: ", e);
-      try {
-        const docRef = await setDoc(doc(db, "results", userId), {
-          guests: arrayUnion(result),
-        });
-        console.log("Document written with ID: ", docRef);
-      } catch (error) {
-        console.error("Error adding document: ", error);
-        throw Error("Произошла ошибка");
-      }
-    }
-  }
-};
+

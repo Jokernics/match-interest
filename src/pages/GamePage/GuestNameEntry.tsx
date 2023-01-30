@@ -40,6 +40,7 @@ export default function GuestNameEntry({ guestName, setGameStatus }: props) {
         <h2>Введите свое имя:</h2>
         <form onSubmit={setGuestName} className="flex gap-3">
           <input
+            autoFocus
             className="px-2 outline-none rounded"
             placeholder="Имя"
             size={15}

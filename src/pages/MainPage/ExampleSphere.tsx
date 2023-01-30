@@ -46,7 +46,7 @@ export default function ExampleSphere() {
       })}
       onClick={handleClick}
       onClickOptions={{ passive: true }}
-      className="mx-auto text-lg"
+      className="mx-auto text-lg animate__animated animate__zoomIn"
     >
       {data.flat()}
     </TagCloud>
