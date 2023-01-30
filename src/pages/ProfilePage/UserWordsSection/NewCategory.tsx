@@ -19,7 +19,11 @@ export default function NewCategory({ data, setData }: props) {
       (acc, cur) => [...acc, Object.keys(cur)[0]],
       [] as string[]
     );
-    if (categories.some((el) => el.toLowerCase() === category.toLowerCase())) {
+    if (
+      categories.some(
+        (el) => el.trim().toLowerCase() === category.trim().toLowerCase()
+      )
+    ) {
       setError("Такая группа уже существует");
       return;
     }

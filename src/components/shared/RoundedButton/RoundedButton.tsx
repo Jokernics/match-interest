@@ -22,7 +22,6 @@ export default function RoundedButton({
   const [isArrow, setIsArrow] = useState(true);
   const timer = useRef<NodeJS.Timeout | null>(null);
 
-
   useEffect(() => {
     if (isSuccess) {
       setIsArrow(true);
@@ -54,8 +53,14 @@ export default function RoundedButton({
             className=" mx-auto overflow-hidden animate__animated animate__fadeIn fill-black"
           />
         </p>
-      )}  
-      <p className={`${isLoading || isArrow ? "invisible" : ""} ${!isArrow && isSuccess ? 'animate__animated animate__fadeIn' : ''}`}>{children}</p>
+      )}
+      <p
+        className={`${isLoading || isArrow ? "invisible" : ""} ${
+          !isArrow && isSuccess ? "animate__animated animate__fadeIn" : ""
+        }`}
+      >
+        {children}
+      </p>
     </button>
   );
 }
