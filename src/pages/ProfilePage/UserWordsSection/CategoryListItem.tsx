@@ -1,7 +1,7 @@
 import { SyntheticEvent, useMemo, useState } from "react";
 import RoundedButton from "../../../components/shared/RoundedButton/RoundedButton";
 import { categoryType, wordsType } from "../../../types/types";
-import { getRandomColor, hexToRgb } from "../../../utils/utils";
+import { getRandomColor, getRandomRgba, hexToRgb } from "../../../utils/utils";
 import WordsList from "./WordsList";
 
 type props = {
@@ -40,16 +40,7 @@ export default function CategoryListItem({
     setData(newData);
   };
 
-  const backgroundColor = useMemo(() => {
-    const color = hexToRgb(getRandomColor());
-    if (color) {
-      const { r, g, b } = color;
-
-      return `rgba(${r}, ${g}, ${b}, .3)`;
-    }
-
-    return "inherit";
-  }, []);
+  const backgroundColor = useMemo(() => getRandomRgba(".3"), []);
 
   return (
     <div

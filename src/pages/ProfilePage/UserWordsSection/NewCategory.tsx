@@ -18,6 +18,7 @@ export default function NewCategory({ data, setData }: props) {
     setData((prev) => [newCategory, ...prev]);
     setCategory("");
   };
+  
   return (
     <div className="flex gap-2 flex-wrap bg-gray-200/20 px-2 py-3 rounded-md mb-3">
       <form onSubmit={addCategory} className="flex gap-2 flex-wrap">

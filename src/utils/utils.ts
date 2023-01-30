@@ -42,3 +42,14 @@ export function getRandomColor() {
   return color;
 }
 
+export function getRandomRgba(opacity: string) {
+  const color = hexToRgb(getRandomColor());
+  if (color) {
+    const { r, g, b } = color;
+
+    return `rgba(${r}, ${g}, ${b}, ${opacity})`;
+  }
+
+  return "inherit";
+}
+
