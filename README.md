@@ -1,4 +1,4 @@
 # Application for finding mutual interests
-https://match-of-interest.netlify.app/user-name
+https://match-of-interest.netlify.app/
 
-Please, enter your name at the end of the link so I can identify you.
+### Its a SPA, where you can fill a beautiful word sphere, share with your friends/strangers and see their results
