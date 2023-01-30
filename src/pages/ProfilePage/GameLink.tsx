@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useNavigate } from "react-router";
 import RoundedButton from "../../components/shared/RoundedButton/RoundedButton";
 
@@ -6,12 +7,18 @@ type props = {
 };
 
 export default function GameLink({ uid }: props) {
-  const siteUrl = window.location.origin
+  const siteUrl = window.location.origin;
   const navigate = useNavigate();
   const url = `${siteUrl}/match/${uid}`;
+  const [isCopied, setIsCopied] = useState(false);
 
   const copyLink = () => {
     navigator.clipboard.writeText(url);
+
+    setIsCopied(false);
+    setTimeout(() => {
+      setIsCopied(true);
+    }, 3);
   };
 
   return (
@@ -22,7 +29,9 @@ export default function GameLink({ uid }: props) {
         <RoundedButton onClick={() => navigate(`/match/${uid}`)}>
           Перейти
         </RoundedButton>
-        <RoundedButton onClick={copyLink}>Скопировать</RoundedButton>
+        <RoundedButton isSuccess={isCopied} onClick={copyLink}>
+          Скопировать
+        </RoundedButton>
       </div>
     </div>
   );

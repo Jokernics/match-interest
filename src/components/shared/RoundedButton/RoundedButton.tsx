@@ -1,5 +1,6 @@
-import { ReactElement } from "react";
+import { ReactElement, useEffect, useRef, useState } from "react";
 import Loader from "../Loader/Loader";
+import { ReactComponent as ArrowIcon } from "../../../assets/images/arrow.svg";
 
 type props = {
   onClick?: () => void;
@@ -7,6 +8,7 @@ type props = {
   className?: string;
   style?: {};
   isLoading?: boolean;
+  isSuccess?: boolean;
 };
 
 export default function RoundedButton({
@@ -15,19 +17,45 @@ export default function RoundedButton({
   className,
   style = {},
   isLoading = false,
+  isSuccess = false,
 }: props) {
+  const [isArrow, setIsArrow] = useState(true);
+  const timer = useRef<NodeJS.Timeout | null>(null);
+
+
+  useEffect(() => {
+    if (isSuccess) {
+      setIsArrow(true);
+      timer.current = setTimeout(() => {
+        setIsArrow(false);
+      }, 2000);
+    } else {
+      setIsArrow(false);
+
+      if (timer.current) {
+        clearTimeout(timer.current);
+      }
+    }
+  }, [isSuccess]);
+
   return (
     <button
       style={style}
-      onClick={() => !isLoading && onClick && onClick()}
-      className={`rounded h-9 w-fit text-black flex justify-center items-center bg-slate-200 px-2 hover:bg-slate-500 transition-all ${
+      onClick={() => !isLoading && !isArrow && onClick && onClick()}
+      className={`relative rounded h-9 w-fit text-black flex justify-center items-center bg-slate-200 px-2 hover:bg-slate-500 transition-all ${
         className ? className : ""
       }`}
     >
-      <p className={`${!isLoading ? "invisible" : ""} absolute`}>
-        {<Loader />}
-      </p>
-      <p className={`${isLoading ? "invisible" : ""}`}>{children}</p>
+      {isLoading && <p className="absolute">{<Loader />}</p>}
+      {isArrow && (
+        <p className="absolute">
+          <ArrowIcon
+            style={{ animationDuration: ".8s" }}
+            className=" mx-auto overflow-hidden animate__animated animate__fadeIn fill-black"
+          />
+        </p>
+      )}  
+      <p className={`${isLoading || isArrow ? "invisible" : ""} ${!isArrow && isSuccess ? 'animate__animated animate__fadeIn' : ''}`}>{children}</p>
     </button>
   );
 }

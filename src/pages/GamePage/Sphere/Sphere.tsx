@@ -27,7 +27,7 @@ export default function Sphere({
   const calcRadius = () =>
     Math.min(window.innerWidth, window.innerHeight) / 2.5;
   const [radius, setRadius] = useState(calcRadius());
-  const { makeReq, isLoading, error } = useFetch();
+  const { makeReq, isLoading, error, isSuccess } = useFetch();
 
   useEffect(() => {
     const handleResize = () => {
@@ -130,7 +130,7 @@ export default function Sphere({
         style={{ animationDelay: isFinish ? "0s" : ".7s" }}
       >
         {error && <p className="text-yellow-400">Произошла ошибка {error}</p>}
-        <RoundedButton onClick={() => makeReq(finish)} isLoading={isLoading}>
+        <RoundedButton isSuccess={isSuccess} onClick={() => makeReq(finish)} isLoading={isLoading}>
           Закончить
         </RoundedButton>
         <h2 className="text-white">{counter}</h2>

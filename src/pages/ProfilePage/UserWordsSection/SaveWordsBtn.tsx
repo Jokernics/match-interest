@@ -9,7 +9,7 @@ type props = {
 };
 
 export default function SaveWordsBtn({ data }: props) {
-  const { makeReq, isLoading, error } = useFetch();
+  const { makeReq, isLoading, error, isSuccess } = useFetch();
 
   return (
     <div className="flex w-fit gap-3 ml-auto">
@@ -18,6 +18,7 @@ export default function SaveWordsBtn({ data }: props) {
         className="flex ml-auto"
         onClick={() => makeReq(async () => Api.updateUserWords(data))}
         isLoading={isLoading}
+        isSuccess={isSuccess}
       >
         Сохранить
       </RoundedButton>
