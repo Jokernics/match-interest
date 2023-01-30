@@ -4,14 +4,6 @@
   }
 }
 
-body {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  overflow: hidden;
-}
-
 @function random_range($min, $max) {
   $rand: random();
   $random_range: $min + floor($rand * (($max - $min) + 1));
@@ -46,12 +38,7 @@ body {
   border-radius: 50%;
   filter: drop-shadow(0 0 6px currentColor);
   transform: translate3d(104em, 0, 0);
-  animation: fall var(--fall-duration) var(--fall-delay) linear infinite, tail-fade var(--tail-fade-duration) var(--fall-delay) ease-out infinite;
   
-  @include sp-layout {
-    // For mobile performance, tail-fade animation will be removed QAQ
-    animation: fall var(--fall-duration) var(--fall-delay) linear infinite;
-  }
 
   @for $i from 1 through $star-count {
     &:nth-child(#{$i}) {
@@ -80,6 +67,15 @@ body {
 
   &::after {
     transform: rotate(-45deg);
+  }
+}
+
+.animated-star {
+  animation: fall var(--fall-duration) var(--fall-delay) linear, tail-fade var(--tail-fade-duration) var(--fall-delay) ease-out;
+  
+  @include sp-layout {
+    // For mobile performance, tail-fade animation will be removed QAQ
+    animation: fall var(--fall-duration) var(--fall-delay) linear;
   }
 }
 

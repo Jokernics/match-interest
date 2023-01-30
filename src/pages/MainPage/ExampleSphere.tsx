@@ -46,7 +46,7 @@ export default function ExampleSphere() {
       })}
       onClick={handleClick}
       onClickOptions={{ passive: true }}
-      className="mx-auto"
+      className="mx-auto text-lg"
     >
       {data.flat()}
     </TagCloud>
