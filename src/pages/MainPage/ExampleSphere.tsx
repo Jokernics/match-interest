@@ -37,18 +37,20 @@ export default function ExampleSphere() {
     }
   }, []);
   return (
-    <TagCloud
-      options={(w: Window & typeof globalThis) => ({
-        radius: radius,
-        maxSpeed: "normal",
-        initSpeed: "fast",
-        direction: "110",
-      })}
-      onClick={handleClick}
-      onClickOptions={{ passive: true }}
-      className="mx-auto text-lg animate__animated animate__zoomIn"
-    >
-      {data.flat()}
-    </TagCloud>
+   <div className="flex flex-col items-center justify-center grow">
+      <TagCloud
+        options={(w: Window & typeof globalThis) => ({
+          radius: radius,
+          maxSpeed: "normal",
+          initSpeed: "fast",
+          direction: "110",
+        })}
+        onClick={handleClick}
+        onClickOptions={{ passive: true }}
+        className=" text-lg animate__animated animate__zoomIn"
+      >
+        {data.flat()}
+      </TagCloud>
+   </div>
   );
 }

@@ -31,7 +31,7 @@ export default function CategoryListItem({
   return (
     <div className="flex gap-2">
       <h5 className="rounded flex items-center justify-center bg-amber-400 px-4 py-1 shrink-0 text-slate-800"
-        style={{width: maxCategoryWidth * 12}}
+        style={{width: maxCategoryWidth * 12.3}}
       >
         {categoryName}
       </h5>

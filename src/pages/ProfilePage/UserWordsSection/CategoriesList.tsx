@@ -9,14 +9,14 @@ type props = {
 
 export default function CategoriesList({ data, setData }: props) {
   const maxCategoryWidth = useMemo(
-    () => data.map((el) => Object.keys(el)[0]).sort((a, b) => b.length - a.length)[0].length,
+    () => data.length && data.map((el) => Object.keys(el)[0]).sort((a, b) => b.length - a.length)[0].length,
     [data]
   );
 
-  if (!data.length) return <h2>Слов нет, добавьте категорию</h2>;
+  if (!data.length) return <h2>Слов нет, начните с категории</h2>;
 
   return (
-    <div className="flex flex-col gap-3 ">
+    <div className="flex flex-col gap-3 overflow-auto">
       {data.map((category, categoryIndex) => (
         <CategoryListItem
           key={categoryIndex}

@@ -30,11 +30,11 @@ export default function ProfilePage() {
         "
       >
         {tabNames.map((Name, i) => {
-          const activeClass = tabIndex === i ? "bg-slate-500" : "";
+          const activeClass = tabIndex === i ? "bg-slate-500" : "bg-slate-200";
           return (
             <Name
               key={i}
-              className={`px-2 h-9 hover:bg-slate-500 transition-all rounded w-full bg-slate-200 text-black ${activeClass}`}
+              className={`px-2 h-9 hover:bg-slate-500 transition-all rounded w-full text-black ${activeClass}`}
             />
           );
         })}
@@ -47,7 +47,7 @@ export default function ProfilePage() {
           background:
             "linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(150,150,181,0.3) 100%, rgba(0,212,255,1) 100%)",
         }}
-        className="px-3 pt-3 w-full flex justify-center"
+        className="px-3 pt-3 w-full flex justify-center overflow-hidden"
       >
         {tabElement}
       </div>

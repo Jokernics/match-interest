@@ -4,12 +4,12 @@ import ExampleSphere from "./ExampleSphere";
 export default function MainPage() {
   const paragraph = [
     "Тест на совместимость:",
-    "Заполняйте список своих увлечений и делитесь им c друзьями",
-    "чтобы проверить на сколько вы похожи",
+    "Заполните список своих увлечений, поделитесь им c друзьями",
+    "проверьте на сколько вы похожи",
   ];
 
   return (
-    <div className="text-2xl text-white gap-2 w-full h-full flex flex-col justify-center overflow-hidden">
+    <div className="text-2xl text-white gap-2 w-full h-full flex flex-col pt-[10%] overflow-hidden">
       <div className="flex flex-col items-center text-center">
         {paragraph.map((str, i, arr) => {
           const startTime = arr.slice(0, i).reduce((acc, cur) => acc + cur.length, 0) || 1;
