@@ -1,4 +1,4 @@
-import { redirect, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 import RoundedButton from "../../components/shared/RoundedButton/RoundedButton";
 
 type props = {

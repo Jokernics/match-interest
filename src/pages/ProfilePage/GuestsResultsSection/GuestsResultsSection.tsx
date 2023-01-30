@@ -23,6 +23,8 @@ export default function GuestsResultsSection({ uid }: props) {
 
   if (error) return <h2>{JSON.stringify(error)}</h2>;
 
+  if (!results) return <h2>Результаты отсутствуют</h2>
+
   return (
     <div className="flex flex-col gap-3 w-full ">
       <h2>Результаты:</h2>
