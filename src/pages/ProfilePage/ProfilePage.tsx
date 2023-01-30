@@ -16,40 +16,37 @@ export default function ProfilePage() {
   const { tabNames, tabElement, tabIndex } = useTabs({ data: tabData });
 
   return (
-    <div
-      className="h-full w-full flex pb-2 rounded-xl overflow-hidden -ml-2 mr-2"
-      style={{ fontSize: "1.1em" }}
-    >
+    <div className="h-full w-full flex flex-col pb-2">
       <div
-        style={{
-          background:
-            "linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(150,150,181,0.24413515406162467) 100%, rgba(0,212,255,1) 100%)",
-        }}
-        className="flex flex-col items-start gap-3 pb-4 px-3 pt-3
-          rounded-md
+        className="flex flex-col grow rounded-xl
+          bg-gradient-to-r from-cyan-500/10 to-blue-500/25 
         "
       >
-        {tabNames.map((Name, i) => {
-          const activeClass = tabIndex === i ? "bg-slate-500" : "bg-slate-200";
-          return (
-            <Name
-              key={i}
-              className={`px-2 h-9 hover:bg-slate-500 transition-all rounded w-full text-black ${activeClass}`}
-            />
-          );
-        })}
-        <RoundedButton className="!w-full h-9 bg-red-600 hover:bg-red-900" onClick={() => Api.logout()}>
-          Выйти
-        </RoundedButton>
-      </div>
-      <div
-        style={{
-          background:
-            "linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(150,150,181,0.3) 100%, rgba(0,212,255,1) 100%)",
-        }}
-        className="px-3 pt-3 w-full flex justify-center overflow-hidden"
-      >
-        {tabElement}
+        <div
+          className="flex items-start gap-3 pb-4 px-3 pt-3
+            rounded-md
+          "
+        >
+          {tabNames.map((Name, i) => {
+            const activeClass =
+              tabIndex === i ? "bg-slate-500" : "bg-slate-200";
+            return (
+              <Name
+                key={i}
+                className={`px-2 h-9 hover:bg-slate-500 transition-all rounded text-black ${activeClass}`}
+              />
+            );
+          })}
+          <RoundedButton
+            className="h-9 bg-red-600 hover:bg-red-900 ml-auto"
+            onClick={() => Api.logout()}
+          >
+            Выйти
+          </RoundedButton>
+        </div>
+        <div className="px-3 py-3 w-full flex justify-center overflow-hidden">
+          {tabElement}
+        </div>
       </div>
     </div>
   );

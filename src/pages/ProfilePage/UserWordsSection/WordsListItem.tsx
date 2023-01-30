@@ -18,7 +18,7 @@ export default function WordsListItem({
   categoryIndex,
   wordIndex,
 }: props) {
-  const [isEditingMode, setIsEditingMode] = useState(true);
+  const [isEditingMode, setIsEditingMode] = useState(false);
 
   const editWord = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -32,38 +32,35 @@ export default function WordsListItem({
     const words = newData[categoryIndex][categoryName];
     words.splice(wordIndex, 1);
 
-    if (!words.length) {
-      newData = newData.filter((_, i) => i !== categoryIndex);
-    } else {
-      newData[categoryIndex][categoryName] = words;
-    }
-
     setData(newData);
   };
 
   return (
-    <div className="h-9 rounded bg-slate-600 pr-2 flex justify-center items-center overflow-hidden">
+    <div className="h-9 rounded bg-slate-600 pr-2 flex justify-center items-center overflow-hidden relative">
       {isEditingMode ? (
         <input
-          onBlurCapture={() => setIsEditingMode(false)}
+          onBlur={() => setIsEditingMode(false)}
+          autoFocus
           onChange={editWord}
           value={word}
           className="h-full outline-none bg-inherit text-white px-2"
-          size={word.length || 1}
-          autoFocus
+          size={word.length - 1 < 1 ? 2 : word.length - 1}
         />
       ) : (
         <h5
           onClick={() => {
             setIsEditingMode(true);
           }}
-          className="h-full min-w-[10px] px-3 flex items-center"
+          className="h-full min-w-[2.3em] pl-1 pr-2 flex items-center"
         >
           {word}
         </h5>
       )}
       {!isEditingMode && (
-        <button onClick={deleteWord} className="text-sm">
+        <button
+          onClick={deleteWord}
+          className="text-[8px] absolute top-[1px] right-[1px]"
+        >
           &#10060;
         </button>
       )}

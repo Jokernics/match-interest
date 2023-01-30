@@ -8,11 +8,6 @@ type props = {
 };
 
 export default function CategoriesList({ data, setData }: props) {
-  const maxCategoryWidth = useMemo(
-    () => data.length && data.map((el) => Object.keys(el)[0]).sort((a, b) => b.length - a.length)[0].length,
-    [data]
-  );
-
   if (!data.length) return <h2>Слов нет, начните с категории</h2>;
 
   return (
@@ -20,7 +15,7 @@ export default function CategoriesList({ data, setData }: props) {
       {data.map((category, categoryIndex) => (
         <CategoryListItem
           key={categoryIndex}
-          {...{ category, data, setData, categoryIndex, maxCategoryWidth }}
+          {...{ category, data, setData, categoryIndex }}
         />
       ))}
     </div>

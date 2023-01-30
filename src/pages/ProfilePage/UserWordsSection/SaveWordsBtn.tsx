@@ -12,7 +12,7 @@ export default function SaveWordsBtn({ data }: props) {
   const { makeReq, isLoading, error } = useFetch();
 
   return (
-    <div className="flex w-fit gap-3">
+    <div className="flex w-fit gap-3 ml-auto">
       {error && <h5>{error}</h5>}
       <RoundedButton
         className="flex ml-auto"

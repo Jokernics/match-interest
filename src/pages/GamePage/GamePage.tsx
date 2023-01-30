@@ -19,7 +19,7 @@ export default function GamePage() {
   if (!words.length) return <h2 className="mx-auto">Ничего не найдено</h2>;
 
   return (
-    <div className="flex flex-col flex-grow overflow-hidden">
+    <div className="flex flex-col flex-grow">
       {!!words.length && <Game {...{ words, userId }} />}
     </div>
   );

@@ -1,9 +1,6 @@
 import { SyntheticEvent, useState } from "react";
-import Api from "../../../API/API";
 import RoundedButton from "../../../components/shared/RoundedButton/RoundedButton";
-import { useFetch } from "../../../hooks/useFetch";
 import { categoryType, wordsType } from "../../../types/types";
-import SaveWordsBtn from "./SaveWordsBtn";
 
 type props = {
   data: wordsType;
@@ -17,7 +14,7 @@ export default function NewCategory({ data, setData }: props) {
     e.preventDefault();
     if (!category.trim().length) return;
 
-    const newCategory = { [category]: [""] } as categoryType;
+    const newCategory = { [category]: [] } as categoryType;
     setData((prev) => [newCategory, ...prev]);
     setCategory("");
   };
@@ -33,7 +30,6 @@ export default function NewCategory({ data, setData }: props) {
         />
         <RoundedButton className="text-center">Добавить</RoundedButton>
       </form>
-      <SaveWordsBtn {...{ data }} />
     </div>
   );
 }
