@@ -25,7 +25,7 @@ export default function Sphere({
   const [isFinish, setIsFinish] = useState(false);
   const [counter, setCounter] = useState(0);
   const calcRadius = () =>
-    Math.min(window.innerWidth, window.innerHeight) / 2.5;
+    Math.min(window.innerWidth, window.innerHeight) / 1.8;
   const [radius, setRadius] = useState(calcRadius());
   const { makeReq, isLoading, error, isSuccess } = useFetch();
 
@@ -122,7 +122,7 @@ export default function Sphere({
   );
 
   return (
-    <div className="flex flex-col grow justify-center items-center select-none relative">
+    <div className="flex flex-col grow overflow-clip justify-center items-center select-none relative">
       <div
         className={`absolute right-5 top-0 z-20 flex justify-center items-center gap-3 mt-2
           animate__animated ${buttonAnimation}
@@ -137,7 +137,7 @@ export default function Sphere({
       </div>
 
       <div
-        className={`flex flex-col animate__animated tagcloud ${sphereAnimation}`}
+        className={`flex flex-col fixed animate__animated tagcloud ${sphereAnimation}`}
       >
         {Cloud}
       </div>
