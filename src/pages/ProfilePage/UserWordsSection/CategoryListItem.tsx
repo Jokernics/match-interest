@@ -1,6 +1,7 @@
-import { SyntheticEvent, useState } from "react";
+import { SyntheticEvent, useMemo, useState } from "react";
 import RoundedButton from "../../../components/shared/RoundedButton/RoundedButton";
 import { categoryType, wordsType } from "../../../types/types";
+import { getRandomColor, hexToRgb } from "../../../utils/utils";
 import WordsList from "./WordsList";
 
 type props = {
@@ -39,8 +40,22 @@ export default function CategoryListItem({
     setData(newData);
   };
 
+  const backgroundColor = useMemo(() => {
+    const color = hexToRgb(getRandomColor());
+    if (color) {
+      const { r, g, b } = color;
+
+      return `rgba(${r}, ${g}, ${b}, .3)`;
+    }
+
+    return "inherit";
+  }, []);
+
   return (
-    <div className="flex flex-col gap-2">
+    <div
+      className="flex flex-col gap-2 rounded-md py-2 px-2"
+      style={{ backgroundColor }}
+    >
       <div className="flex gap-2 flex-col sm:flex-row">
         <div className="relative w-fit flex">
           <h5 className="rounded bg-amber-400 px-2 py-1 text-slate-800">
@@ -64,8 +79,10 @@ export default function CategoryListItem({
           <RoundedButton>Добавить</RoundedButton>
         </form>
       </div>
-      {!!words.length && (
+      {!!words.length ? (
         <WordsList {...{ words, data, setData, categoryName, categoryIndex }} />
+      ) : (
+        <h2>Категория пуста</h2>
       )}
     </div>
   );

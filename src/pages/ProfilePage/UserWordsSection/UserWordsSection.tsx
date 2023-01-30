@@ -13,7 +13,10 @@ type props = {
 export default function UserWordsSection({ uid }: props) {
   const [res, loading, error] = useDocument(doc(db, "words", uid));
   const data = useMemo(
-    () => (res?.exists() && res.data().hasOwnProperty("categories") ? res.data().categories : []),
+    () =>
+      res?.exists() && res.data().hasOwnProperty("categories")
+        ? res.data().categories
+        : [],
     [res]
   );
 
