@@ -50,9 +50,9 @@ export default function CategoryListItem({
       className="flex flex-col gap-2 rounded-md py-2 px-2"
       style={{ backgroundColor }}
     >
-      <div className="flex gap-2 flex-col sm:flex-row">
-        <div className="relative w-fit flex">
-          <h5 className="rounded bg-amber-400 pl-2 pr-4 py-1 text-slate-800">
+      <div className="flex gap-2 flex-col sm:flex-row flex-wrap w-full">
+        <div className="relative flex rounded bg-amber-400 overflow-auto max-w-full">
+          <h5 className=" whitespace-nowrap overflow-auto pl-2 pr-4 py-1 text-slate-800">
             {categoryIndex + 1}. {categoryName}
           </h5>
           <button
@@ -62,12 +62,13 @@ export default function CategoryListItem({
             &#10060;
           </button>
         </div>
-        <form onSubmit={addNewWord} className="flex flex-wrap gap-2">
+        <form onSubmit={addNewWord} className="flex flex-wrap gap-2 w-full">
           <MyInput
             placeholder="Новое слово"
             value={newWord}
             onChange={(e) => setNewWord(e.target.value)}
             type="search"
+            className="grow sm:grow-0"
           />
           <RoundedButton>Добавить</RoundedButton>
         </form>

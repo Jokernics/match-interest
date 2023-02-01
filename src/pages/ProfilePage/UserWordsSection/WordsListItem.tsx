@@ -37,7 +37,7 @@ export default function WordsListItem({
   };
 
   return (
-    <div className="h-9 rounded bg-slate-600 pr-2 flex justify-center items-center overflow-hidden relative">
+    <div className="min-h-[2.25rem] rounded bg-slate-600 pr-2 flex justify-center items-center overflow-hidden relative">
       {isEditingMode ? (
         <MyInput
           onBlur={() => setIsEditingMode(false)}
@@ -51,7 +51,7 @@ export default function WordsListItem({
           onClick={() => {
             setIsEditingMode(true);
           }}
-          className="h-full min-w-[2.3em] pl-1 pr-2 flex items-center"
+          className="h-full whitespace-nowrap overflow-auto min-w-[2.3em] pl-1 pr-2 flex items-center"
         >
           {word}
         </h5>
