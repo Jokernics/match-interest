@@ -76,7 +76,7 @@ export default function CategoryListItem({
       {!!words.length ? (
         <WordsList {...{ words, data, setData, categoryName, categoryIndex }} />
       ) : (
-        <h2>Категория пуста</h2>
+        <h2 className="text-center sm:text-left">Категория пуста</h2>
       )}
     </div>
   );

@@ -7,7 +7,12 @@ type props = {
 };
 
 export default function CategoriesList({ data, setData }: props) {
-  if (!data.length) return <h2>Слов нет, начните с категории</h2>;
+  if (!data.length)
+    return (
+      <h2 className="text-center sm:text-left">
+        Слов нет, начните с категории
+      </h2>
+    );
 
   return (
     <div className="flex flex-col gap-3">
