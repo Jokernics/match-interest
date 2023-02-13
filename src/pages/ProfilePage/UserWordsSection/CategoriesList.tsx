@@ -18,7 +18,7 @@ export default function CategoriesList({ data, setData }: props) {
     <div className="flex flex-col gap-3">
       {data.map((category, categoryIndex) => (
         <CategoryListItem
-          key={Object.keys(category)[0]}
+          key={categoryIndex}
           {...{ category, data, setData, categoryIndex }}
         />
       ))}

@@ -13,7 +13,7 @@ export default function ProfilePage() {
     { name: "Результаты", element: <GuestsResultsSection {...{ uid }} /> },
   ];
 
-  const { tabNames, tabElement, tabIndex } = useTabs({ data: tabData });
+  const { tabNames, TabElement, tabIndex } = useTabs({ data: tabData });
 
   return (
     <div
@@ -26,10 +26,10 @@ export default function ProfilePage() {
             rounded-md
           "
       >
-        {tabNames.map((Name, i) => {
+        {tabNames.map((TabName, i) => {
           const activeClass = tabIndex === i ? "bg-slate-500" : "bg-slate-200";
           return (
-            <Name
+            <TabName
               key={i}
               className={`px-2 h-9 hover:bg-slate-500 transition-all rounded text-black ${activeClass}`}
             />
@@ -43,7 +43,7 @@ export default function ProfilePage() {
         </RoundedButton>
       </div>
       <div className="px-3 py-3 w-full flex justify-center overflow-hidden">
-        {tabElement}
+        <TabElement/>
       </div>
     </div>
   );

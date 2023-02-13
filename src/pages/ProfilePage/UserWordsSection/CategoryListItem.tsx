@@ -1,8 +1,8 @@
-import { SyntheticEvent, useMemo, useState } from "react";
-import MyInput from "../../../components/shared/MyInput";
-import RoundedButton from "../../../components/shared/RoundedButton/RoundedButton";
+import { useMemo } from "react";
+import EditableTitle from "../../../components/shared/EditableTitle";
 import { categoryType, wordsType } from "../../../types/types";
 import { getRandomRgba } from "../../../utils/utils";
+import AddNewWord from "./AddNewWord";
 import WordsList from "./WordsList";
 
 type props = {
@@ -20,26 +20,21 @@ export default function CategoryListItem({
 }: props) {
   const categoryName = Object.keys(category)[0];
   const words = category[categoryName];
-  const [newWord, setNewWord] = useState("");
-
-  const addNewWord = (e: SyntheticEvent) => {
-    e.preventDefault();
-
-    if (!newWord.trim().length) return;
-
-    let words = category[categoryName];
-    words = [...words, newWord];
-    const newData = [...data];
-    newData[categoryIndex] = { [categoryName]: words };
-
-    setNewWord("");
-    setData(newData);
-  };
 
   const deleteCategory = () => {
     let newData = [...data];
     newData.splice(categoryIndex, 1);
 
+    setData(newData);
+  };
+
+  const changeCategory = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+
+    const newData = [...data];
+    const categoryData = Object.values(newData[categoryIndex])[0];
+
+    newData[categoryIndex] = { [value]: categoryData };
     setData(newData);
   };
 
@@ -51,27 +46,16 @@ export default function CategoryListItem({
       style={{ backgroundColor }}
     >
       <div className="flex gap-2 flex-col sm:flex-row flex-wrap w-full">
-        <div className="relative flex rounded bg-amber-400 overflow-auto max-w-full">
-          <h5 className=" whitespace-nowrap overflow-auto pl-2 pr-4 py-1 text-slate-800">
-            {categoryIndex + 1}. {categoryName}
-          </h5>
-          <button
-            onClick={deleteCategory}
-            className="text-[8px] absolute top-[1px] right-[1px]"
-          >
-            &#10060;
-          </button>
-        </div>
-        <form onSubmit={addNewWord} className="flex flex-wrap gap-2 w-full">
-          <MyInput
-            placeholder="Новое слово"
-            value={newWord}
-            onChange={(e) => setNewWord(e.target.value)}
-            type="search"
-            className="grow sm:grow-0"
-          />
-          <RoundedButton>Добавить</RoundedButton>
-        </form>
+        <EditableTitle
+          inputValue={categoryName}
+          titleValue={`${categoryIndex + 1}. ${categoryName}`}
+          onDelete={deleteCategory}
+          onChange={changeCategory}
+          className="!bg-amber-400 !text-slate-800 w-full sm:w-auto [&>input]:w-full [&>input]:sm:w-auto"
+        />
+        <AddNewWord
+          {...{ category, categoryIndex, categoryName, data, setData }}
+        />
       </div>
       {!!words.length ? (
         <WordsList {...{ words, data, setData, categoryName, categoryIndex }} />

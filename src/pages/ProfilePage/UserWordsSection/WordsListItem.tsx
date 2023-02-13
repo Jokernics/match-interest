@@ -1,5 +1,5 @@
-import { ChangeEvent, useState } from "react";
-import MyInput from "../../../components/shared/MyInput";
+import { ChangeEvent } from "react";
+import EditableTitle from "../../../components/shared/EditableTitle";
 import { wordsType } from "../../../types/types";
 
 type props = {
@@ -19,8 +19,6 @@ export default function WordsListItem({
   categoryIndex,
   wordIndex,
 }: props) {
-  const [isEditingMode, setIsEditingMode] = useState(false);
-
   const editWord = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     const newData = [...data];
@@ -37,38 +35,11 @@ export default function WordsListItem({
   };
 
   return (
-    <div
-      className={`min-h-[2.25rem] rounded bg-slate-600 flex justify-center items-center overflow-hidden relative ${!isEditingMode && 'pr-4'}
-    `}
-    >
-      {isEditingMode ? (
-        <MyInput
-          type="text"
-          className="pr-2 overflow-auto"
-          onBlur={() => setIsEditingMode(false)}
-          autoFocus
-          onChange={editWord}
-          value={word}
-          size={word.length - 1 < 1 ? 2 : word.length}
-        />
-      ) : (
-        <h5
-          onClick={() => {
-            setIsEditingMode(true);
-          }}
-          className="h-full whitespace-nowrap overflow-auto min-w-[2.3em] pl-1 pr-1 flex items-center"
-        >
-          {word}
-        </h5>
-      )}
-      {!isEditingMode && (
-        <button
-          onClick={deleteWord}
-          className="text-[8px] absolute top-[1px] right-[1px]"
-        >
-          &#10060;
-        </button>
-      )}
-    </div>
+    <EditableTitle
+      onChange={editWord}
+      onDelete={deleteWord}
+      inputValue={word}
+      titleValue={word}
+    />
   );
 }

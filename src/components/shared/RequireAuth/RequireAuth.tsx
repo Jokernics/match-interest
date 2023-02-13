@@ -13,7 +13,7 @@ export default function RequireAuth({ children }: props) {
   const [user, loading, error] = useAuthState(auth);
 
   if (loading) return <Loader />;
-
+ 
   if (error) return <h2>{JSON.stringify(error)}</h2>;
 
   if (!user)

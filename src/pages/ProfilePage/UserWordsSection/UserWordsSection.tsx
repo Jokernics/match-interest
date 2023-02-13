@@ -22,7 +22,7 @@ export default function UserWordsSection({ uid }: props) {
 
   if (loading) return <Loader />;
 
-  if (error) return <h2>{JSON.stringify(error)}</h2>;
+  if (!!error) return <h2>{JSON.stringify(error)}</h2>;
 
   return (
     <div className="flex flex-col w-full gap-4">
