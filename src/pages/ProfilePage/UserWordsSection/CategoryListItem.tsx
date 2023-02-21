@@ -51,7 +51,7 @@ export default function CategoryListItem({
           titleValue={`${categoryIndex + 1}. ${categoryName}`}
           onDelete={deleteCategory}
           onChange={changeCategory}
-          className="!bg-amber-400 !text-slate-800 w-full sm:w-auto [&>input]:w-full [&>input]:sm:w-auto"
+          className="!bg-amber-400 !text-slate-800 w-full sm:w-auto [&>input]:w-full [&>input]:sm:w-auto !justify-start"
         />
         <AddNewWord
           {...{ category, categoryIndex, categoryName, data, setData }}

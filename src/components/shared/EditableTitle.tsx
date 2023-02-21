@@ -28,7 +28,7 @@ export default function EditableTitle({
 
   return (
     <div
-      className={`min-h-[2.25rem] rounded bg-slate-600 flex justify-center items-center overflow-hidden relative 
+      className={`min-h-[2.25rem] rounded bg-slate-600 flex justify-center items-center overflow-hidden relative h-9
       ${!isEditingMode ? "pr-4" : ""} ${className}
   `}
     >

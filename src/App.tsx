@@ -24,7 +24,7 @@ const router = createBrowserRouter([
       },
       {
         path: "match/:userId",
-        element: <GamePage />,
+        element: <GamePage />, 
       },
       {
         path: "*",
