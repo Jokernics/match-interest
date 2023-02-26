@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import MyInput from "./MyInput";
 
 type props = {
@@ -17,6 +17,9 @@ export default function EditableTitle({
   className = "",
 }: props) {
   const [isEditingMode, setIsEditingMode] = useState(false);
+  const [inputWidth, setInputWidth] = useState(20);
+
+  const containerRef = useRef<HTMLDivElement>(null);
 
   const handleKeyUp = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
@@ -26,11 +29,29 @@ export default function EditableTitle({
     }
   };
 
+  useEffect(() => {
+    const handleResize = () => {
+      if (containerRef.current) {
+        const width = Number.parseFloat(
+          window.getComputedStyle(containerRef.current, null).width
+        );
+        setInputWidth(width);
+      }
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   return (
     <div
       className={`min-h-[2.25rem] rounded bg-slate-600 flex justify-center items-center overflow-hidden relative h-9
       ${!isEditingMode ? "pr-4" : ""} ${className}
   `}
+      ref={containerRef}
     >
       {isEditingMode ? (
         <MyInput
@@ -41,7 +62,7 @@ export default function EditableTitle({
           autoFocus
           onChange={onChange}
           value={inputValue}
-          size={inputValue.length - 1 < 1 ? 2 : inputValue.length}
+          style={{ width: inputWidth }}
         />
       ) : (
         <h5

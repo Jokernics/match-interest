@@ -28,7 +28,7 @@ export default function Sphere({
     Math.min(window.innerWidth, window.innerHeight) / 1.8;
   const [radius, setRadius] = useState(calcRadius());
   const { makeReq, isLoading, error, isSuccess } = useFetch();
-
+ 
   useEffect(() => {
     const handleResize = () => {
       setRadius(calcRadius());
@@ -69,15 +69,16 @@ export default function Sphere({
       }
     }
   }, []);
+  
 
   const finish = useCallback(async () => {
     const user = window.location.pathname.split("/")[1] || "strange";
     const items = !!selectedItems.length ? selectedItems : ["Это Габэлла"];
     const stat = `${user}: ${selectedItems.length}/${data.flat().length}%0A`;
     const message = items.reduce((acc, cur) => acc + "%0A" + cur, stat);
-
+    const guest = guestName.trim() || 'Unknown'
     const result = {
-      [guestName]: {
+      [guest]: {
         total: words.length,
         answers: selectedItems,
       },

@@ -1,12 +1,13 @@
 import { useCallback, useEffect, useState } from "react";
 import { TagCloud } from "@frank-mayer/react-tag-cloud";
 import { data } from "../../data";
+import SphereSlider from "../../components/shared/SphereSlider/SphereSlider";
 
 export default function ExampleSphere() {
   const [radius, setRadius] = useState(calcRadius());
 
   function calcRadius() {
-    return Math.min(window.innerWidth, window.innerHeight) / 2.5;
+    return Math.min(window.innerWidth, window.innerHeight) / 2.4;
   }
 
   useEffect(() => {
@@ -36,24 +37,17 @@ export default function ExampleSphere() {
       }
     }
   }, []);
+
   return (
     <div
-      className="flex flex-col items-center justify-center grow overflow-clip"
-      style={{ height: calcRadius() }}
+      className="flex items-center justify-center grow overflow-clip text-lg 
+      animate__animated animate__zoomIn"
     >
-      <TagCloud
-        options={(w: Window & typeof globalThis) => ({
-          radius: radius,
-          maxSpeed: "normal",
-          initSpeed: "fast",
-          direction: "110",
-        })}
-        onClick={handleClick}
-        onClickOptions={{ passive: true }}
-        className=" text-lg animate__animated animate__zoomIn"
-      >
-        {data.flat()}
-      </TagCloud>
+      <SphereSlider
+        array={data.flat()}
+        handleClick={handleClick}
+        radius={radius}
+      />
     </div>
   );
 }

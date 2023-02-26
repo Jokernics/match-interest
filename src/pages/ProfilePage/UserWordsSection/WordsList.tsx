@@ -17,7 +17,7 @@ export default function WordsList({
   categoryIndex,
 }: props) {
   return (
-    <div className="flex gap-2 flex-wrap items-center">
+    <div className="flex gap-2 flex-wrap itemsz-center">
       {words.map((word, wordIndex) => {
         return (
           <WordsListItem

@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@frank-mayer/react-tag-cloud": "^1.1.1",
+    "@react-spring/web": "^9.6.1",
     "@reduxjs/toolkit": "^1.9.1",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
@@ -12,7 +13,7 @@
     "@types/node": "^16.18.11",
     "@types/react": "^18.0.27",
     "@types/react-dom": "^18.0.10",
-    "TagCloud": "^2.3.2",
+    "@use-gesture/react": "^10.2.24",
     "animate.css": "^4.1.1",
     "firebase": "^9.16.0",
     "netlify-cli": "^12.9.1",
@@ -24,6 +25,7 @@
     "react-router-dom": "^6.7.0",
     "react-scripts": "5.0.1",
     "sass": "^1.57.1",
+    "TagCloud": "^2.3.2",
     "typescript": "^4.9.4"
   },
   "scripts": {
