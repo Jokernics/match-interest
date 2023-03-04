@@ -1,10 +1,11 @@
-import { TagCloud } from "@frank-mayer/react-tag-cloud";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { data } from "../../../data";
-import { useFetch } from "../../../hooks/useFetch";
-import RoundedButton from "../../../components/shared/RoundedButton/RoundedButton";
-import "./index.scss";
 import Api from "../../../API/API";
+import RoundedButton from "../../../components/shared/RoundedButton/RoundedButton";
+import SphereSlider from "../../../components/shared/SphereSlider/SphereSlider";
+import { data } from "../../../data";
+import { useAllEnabledWidthDiv } from "../../../hooks/useAllEnabledWidthDiv";
+import { useFetch } from "../../../hooks/useFetch";
+import "./index.scss";
 
 type props = {
   setGameStatus: React.Dispatch<React.SetStateAction<string>>;
@@ -24,20 +25,20 @@ export default function Sphere({
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
   const [isFinish, setIsFinish] = useState(false);
   const [counter, setCounter] = useState(0);
-  const calcRadius = () =>
-    Math.min(window.innerWidth, window.innerHeight) / 1.8;
-  const [radius, setRadius] = useState(calcRadius());
+  const [radius, setRadius] = useState(0);
+  const { Div, height } = useAllEnabledWidthDiv();
   const { makeReq, isLoading, error, isSuccess } = useFetch();
- 
+
   useEffect(() => {
     const handleResize = () => {
-      setRadius(calcRadius());
+      const calculatedRadius = Math.min(window.innerWidth, height) / 2;
+      setRadius(calculatedRadius - 2);
     };
-
+    handleResize();
     window.addEventListener("resize", handleResize);
 
     return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  }, [height]);
 
   const sphereAnimation = useMemo(
     () => isAnimation && (isFinish ? "animate__zoomOut" : "animate__zoomIn"),
@@ -69,14 +70,13 @@ export default function Sphere({
       }
     }
   }, []);
-  
 
   const finish = useCallback(async () => {
     const user = window.location.pathname.split("/")[1] || "strange";
     const items = !!selectedItems.length ? selectedItems : ["Это Габэлла"];
     const stat = `${user}: ${selectedItems.length}/${data.flat().length}%0A`;
     const message = items.reduce((acc, cur) => acc + "%0A" + cur, stat);
-    const guest = guestName.trim() || 'Unknown'
+    const guest = guestName.trim() || "Unknown";
     const result = {
       [guest]: {
         total: words.length,
@@ -106,42 +106,33 @@ export default function Sphere({
 
   const Cloud = useMemo(
     () => (
-      <TagCloud
-        options={(w: Window & typeof globalThis) => ({
-          radius: radius,
-          maxSpeed: "normal",
-          initSpeed: "fast",
-          direction: "110",
-        })}
-        onClick={handleClick}
-        onClickOptions={{ passive: true }}
-      >
-        {words}
-      </TagCloud>
+      <SphereSlider array={words} handleClick={handleClick} radius={radius} />
     ),
     [handleClick, radius, words]
   );
 
   return (
-    <div className="flex flex-col grow overflow-clip justify-center items-center select-none relative">
+    <div className="flex flex-col grow select-none relative">
       <div
-        className={`absolute right-5 top-0 z-20 flex justify-center items-center gap-3 mt-2
+        className={`flex justify-end items-center gap-3 mt-2
           animate__animated ${buttonAnimation}
         `}
         style={{ animationDelay: isFinish ? "0s" : ".7s" }}
       >
         {error && <p className="text-yellow-400">Произошла ошибка {error}</p>}
-        <RoundedButton isSuccess={isSuccess} onClick={() => makeReq(finish)} isLoading={isLoading}>
+        <RoundedButton
+          isSuccess={isSuccess}
+          onClick={() => makeReq(finish)}
+          isLoading={isLoading}
+        >
           Закончить
         </RoundedButton>
         <h2 className="text-white">{counter}</h2>
       </div>
 
-      <div
-        className={`flex flex-col fixed animate__animated tagcloud ${sphereAnimation}`}
-      >
-        {Cloud}
-      </div>
+      <Div className={`grow flex items-center justify-center animate__animated tagcloud ${sphereAnimation}`}>
+        {radius !== 0 && Cloud}
+      </Div>
     </div>
   );
 }

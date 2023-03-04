@@ -17,13 +17,13 @@ export default function ProfilePage() {
 
   return (
     <div
-      className="flex flex-col grow rounded-xl
+      className="flex flex-col grow rounded-xl px-3
           bg-gradient-to-r from-cyan-500/10 to-blue-500/25 
         "
     >
       <div
-        className="flex items-start gap-3 pb-4 px-3 pt-3
-            rounded-md
+        className="flex items-start gap-3 pb-4  pt-3
+            rounded-md overflow-auto
           "
       >
         {tabNames.map((TabName, i) => {
@@ -42,7 +42,7 @@ export default function ProfilePage() {
           Выйти
         </RoundedButton>
       </div>
-      <div className="px-3 py-3 w-full flex justify-center overflow-hidden">
+      <div className="py-3 w-full flex justify-center overflow-hidden">
         <TabElement/>
       </div>
     </div>

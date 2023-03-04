@@ -35,13 +35,14 @@ export default function AddNewWord({
   };
   return (
     <form onSubmit={addNewWord} className="flex flex-wrap gap-2 w-full">
-      <MyInput
-        placeholder="Новое слово"
-        value={newWord}
-        onChange={(e) => setNewWord(e.target.value)}
-        type="search"
-        className="grow sm:grow-0"
-      />
+     <div className="flex flex-col grow sm:grow-0 overflow-auto">
+        <MyInput
+          placeholder="Новое слово"
+          value={newWord}
+          onChange={(e) => setNewWord(e.target.value)}
+          type="search"
+        />
+     </div>
       <RoundedButton>Добавить</RoundedButton>
     </form>
   );

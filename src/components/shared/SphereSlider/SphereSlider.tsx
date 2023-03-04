@@ -1,5 +1,5 @@
 import { TagCloud } from "@frank-mayer/react-tag-cloud";
-import { useEffect, useRef } from "react";
+import { memo, useEffect, useMemo, useState } from "react";
 import { ReactComponent as LeftArrow } from "../../../assets/images/chevron_left.svg";
 import { ReactComponent as RightArrow } from "../../../assets/images/chevron_right.svg";
 import { splitArrayByLength } from "../../../utils/utils";
@@ -11,7 +11,7 @@ type props = {
   className?: string;
 };
 
-export default function SphereSlider({
+export default memo(function SphereSlider({
   array,
   radius,
   handleClick,
@@ -19,61 +19,34 @@ export default function SphereSlider({
 }: props) {
   const fillingRatio = 0.045;
   const diameter = radius * 2;
-  const maxLength = Math.round(fillingRatio * diameter);
-  console.log(fillingRatio, diameter, maxLength);
+  const maxWidth = window.innerWidth;
+  let width = diameter > maxWidth ? maxWidth : diameter;
+  const gap = 40
+  const maxLength = Math.round(fillingRatio * width);
   const chunkedArray = splitArrayByLength({ array, chunkLength: maxLength });
+  const [sliderIndex, setSliderIndex] = useState(0);
+  const isLeftBtnDisabled = useMemo(() => sliderIndex === 0, [sliderIndex]);
+  const isRightBtnDisabled = useMemo(
+    () => sliderIndex >= chunkedArray.length - 1,
+    [chunkedArray.length, sliderIndex]
+  );
+  const sliderOffset = useMemo(
+    () => (sliderIndex <= 0 ? 0 : sliderIndex * (width + gap)),
+    [sliderIndex, width]
+  );
 
-  const sliderRef = useRef<HTMLDivElement>(null);
-  const sliderLeftBtn = useRef<HTMLButtonElement>(null);
-  const sliderRightBtn = useRef<HTMLButtonElement>(null);
-
-  const handleSlider = (isLeft = true) => {
-    const slider = sliderRef.current;
-
-    if (slider) {
-      
-      const offset = Math.ceil(diameter) + 20;
-      let scrollLeft = slider.scrollLeft;
-
-      if (isLeft) {
-        scrollLeft -= offset;
-      } else {
-        scrollLeft += offset;
-      }
-
-      const container = sliderRef.current;
-      const sliderLeft = sliderLeftBtn.current;
-      const sliderRight = sliderRightBtn.current;
-      if (sliderLeft && sliderRight && container) {
-        sliderLeft.disabled = scrollLeft <= 0;
-        sliderRight.disabled =
-          container.offsetWidth + scrollLeft >= container.scrollWidth;
-      }
-
-      slider.scrollLeft = scrollLeft;
+  const handleSliderBtns = ({ direction }: { direction: "right" | "left" }) => {
+    if (direction === "left" && !isLeftBtnDisabled) {
+      setSliderIndex((i) => i - 1);
+    }
+    if (direction === "right" && !isRightBtnDisabled) {
+      setSliderIndex((i) => i + 1);
     }
   };
 
   useEffect(() => {
-    const handleResize = () => {
-      const container = sliderRef.current;
-      const sliderLeft = sliderLeftBtn.current;
-      const sliderRight = sliderRightBtn.current;
-      if (!sliderLeft || !sliderRight || !container) return;
-      const isScroll = container.scrollWidth > container.clientWidth;
+    const handleResize = () => {};
 
-      if (isScroll) {
-        sliderLeft.style.display = "block";
-        sliderRight.style.display = "block";
-        sliderLeft.disabled = container.scrollLeft <= 0;
-        sliderRight.disabled =
-          container.offsetWidth + container.scrollLeft >= container.scrollWidth;
-      } else {
-        sliderLeft.style.display = "none";
-        sliderRight.style.display = "none";
-        container.style.width = "auto";
-      }
-    };
     handleResize();
 
     window.addEventListener("resize", handleResize);
@@ -83,12 +56,18 @@ export default function SphereSlider({
     };
   }, []);
 
-  console.log(chunkedArray);
   return (
-    <div className={`flex relative ${className}`} style={{ width: diameter }}>
+    <div
+      className={`flex relative overflow-hidden ${className}`}
+      style={{ minWidth: diameter, width: diameter }}
+    >
       <div
-        className="flex gap-5 w-full overflow-hidden scroll-smooth "
-        ref={sliderRef}
+        className="flex w-full scroll-smooth"
+        style={{
+          transform: `translateX(-${sliderOffset}px)`,
+          transition: "transform .3s",
+          gap
+        }}
       >
         {chunkedArray.map((words, i) => (
           <TagCloud
@@ -106,18 +85,27 @@ export default function SphereSlider({
           </TagCloud>
         ))}
       </div>
-      <button
-        ref={sliderLeftBtn}
-        className="z-999 fill-white disabled:fill-gray-400 absolute top-1/2 -translate-y-1/2 -left-4"
-      >
-        <LeftArrow onClick={() => handleSlider()} />
-      </button>
-      <button
-        ref={sliderRightBtn}
-        className="z-999 fill-white disabled:fill-gray-400 absolute top-1/2 -translate-y-1/2 -right-4"
-      >
-        <RightArrow onClick={() => handleSlider(false)} />
-      </button>
+      {chunkedArray.length > 1 && (
+        <div
+          className="animate__animated animate__fadeIn animate"
+          style={{ animationDelay: "600ms" }}
+        >
+          <button
+            disabled={isLeftBtnDisabled}
+            onClick={() => handleSliderBtns({ direction: "left" })}
+            className="z-40 fill-white disabled:fill-gray-400 absolute top-1/2 -translate-y-1/2 left-2"
+          >
+            <LeftArrow />
+          </button>
+          <button
+            disabled={isRightBtnDisabled}
+            onClick={() => handleSliderBtns({ direction: "right" })}
+            className="z-40 fill-white disabled:fill-gray-400 absolute top-1/2 -translate-y-1/2 right-2"
+          >
+            <RightArrow />
+          </button>
+        </div>
+      )}
     </div>
   );
-}
+});

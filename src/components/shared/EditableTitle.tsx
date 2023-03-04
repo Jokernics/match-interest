@@ -29,14 +29,22 @@ export default function EditableTitle({
     }
   };
 
+  const handleWidth = () => {
+    if (containerRef.current) {
+      const width = Number.parseFloat(
+        window.getComputedStyle(containerRef.current, null).width
+      );
+      setInputWidth(width);
+    }
+  };
+
+  useEffect(() => {
+    handleWidth();
+  }, [isEditingMode]);
+
   useEffect(() => {
     const handleResize = () => {
-      if (containerRef.current) {
-        const width = Number.parseFloat(
-          window.getComputedStyle(containerRef.current, null).width
-        );
-        setInputWidth(width);
-      }
+      handleWidth();
     };
     handleResize();
     window.addEventListener("resize", handleResize);

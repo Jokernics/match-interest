@@ -9,7 +9,7 @@ export default function MainPage() {
   ];
 
   return (
-    <div className="text-2xl text-white gap-2 w-full h-full flex flex-col overflow-hidden">
+    <div className="text-2xl text-white gap-2 w-full h-full flex flex-col">
       <div className="flex flex-col items-center text-center">
         {paragraph.map((str, i, arr) => {
           const startTime = arr.slice(0, i).reduce((acc, cur) => acc + cur.length, 0) || 1;

@@ -1,24 +1,23 @@
 import { useCallback, useEffect, useState } from "react";
-import { TagCloud } from "@frank-mayer/react-tag-cloud";
-import { data } from "../../data";
 import SphereSlider from "../../components/shared/SphereSlider/SphereSlider";
+import { data } from "../../data";
+import { useAllEnabledWidthDiv } from "../../hooks/useAllEnabledWidthDiv";
 
 export default function ExampleSphere() {
-  const [radius, setRadius] = useState(calcRadius());
+  const { Div, height } = useAllEnabledWidthDiv();
 
-  function calcRadius() {
-    return Math.min(window.innerWidth, window.innerHeight) / 2.4;
-  }
+  const [radius, setRadius] = useState(0);
 
   useEffect(() => {
     const handleResize = () => {
-      setRadius(calcRadius());
+      const calculatedRadius = Math.min(window.innerWidth, height) / 2
+      setRadius(calculatedRadius);
     };
-
+    handleResize()
     window.addEventListener("resize", handleResize);
 
     return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  }, [height]);
 
   const handleClick = useCallback((tag: string, event: MouseEvent) => {
     const target = event.target as Element;
@@ -37,17 +36,19 @@ export default function ExampleSphere() {
       }
     }
   }, []);
-
+  
   return (
-    <div
-      className="flex items-center justify-center grow overflow-clip text-lg 
+    <Div
+      className="flex items-center justify-center grow text-lg 
       animate__animated animate__zoomIn"
     >
-      <SphereSlider
-        array={data.flat()}
-        handleClick={handleClick}
-        radius={radius}
-      />
-    </div>
+      {height !== 0 && (
+        <SphereSlider
+          array={data.flat()}
+          handleClick={handleClick}
+          radius={radius}
+        />
+      )}
+    </Div>
   );
 }

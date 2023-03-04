@@ -36,7 +36,7 @@ export default function NewCategory({ data, setData }: props) {
   return (
     <div className="flex gap-2 flex-wrap bg-gray-200/20 px-2 py-3 rounded-md mb-3">
       <form onSubmit={addCategory} className="flex gap-2 flex-wrap w-full">
-        <div className="flex flex-col grow sm:grow-0">
+        <div className="flex flex-col grow sm:grow-0 overflow-auto">
           <MyInput
             placeholder="Новая категория"
             value={category}
