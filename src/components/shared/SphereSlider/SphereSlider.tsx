@@ -21,7 +21,7 @@ export default memo(function SphereSlider({
   const diameter = radius * 2;
   const maxWidth = window.innerWidth;
   let width = diameter > maxWidth ? maxWidth : diameter;
-  const gap = 40
+  const gap = 40;
   const maxLength = Math.round(fillingRatio * width);
   const chunkedArray = splitArrayByLength({ array, chunkLength: maxLength });
   const [sliderIndex, setSliderIndex] = useState(0);
@@ -66,7 +66,7 @@ export default memo(function SphereSlider({
         style={{
           transform: `translateX(-${sliderOffset}px)`,
           transition: "transform .3s",
-          gap
+          gap,
         }}
       >
         {chunkedArray.map((words, i) => (
@@ -95,7 +95,9 @@ export default memo(function SphereSlider({
             onClick={() => handleSliderBtns({ direction: "left" })}
             className="z-40 fill-white disabled:fill-gray-400 absolute top-1/2 -translate-y-1/2 left-2"
           >
-            <LeftArrow />
+            <div className="relative h-6 w-6 overflow-hidden">
+              <LeftArrow className="absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2" />
+            </div>
           </button>
           <button
             disabled={isRightBtnDisabled}

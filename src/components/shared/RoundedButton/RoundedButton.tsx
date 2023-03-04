@@ -3,7 +3,7 @@ import Loader from "../Loader/Loader";
 import { ReactComponent as ArrowIcon } from "../../../assets/images/arrow.svg";
 
 type props = {
-  onClick?: () => void;
+  onClick?: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
   children: string | ReactElement;
   className?: string;
   style?: {};
@@ -40,7 +40,7 @@ export default function RoundedButton({
   return (
     <button
       style={style}
-      onClick={() => !isLoading && !isArrow && onClick && onClick()}
+      onClick={(e) => !isLoading && !isArrow && onClick && onClick(e)}
       className={`relative rounded h-9 w-fit text-black flex justify-center items-center bg-slate-200 px-2 hover:bg-slate-500 transition-all ${
         className ? className : ""
       }`}

@@ -1,4 +1,4 @@
-import { SyntheticEvent, useState } from "react";
+import { SyntheticEvent, useState, useRef } from "react";
 import MyInput from "../../../components/shared/MyInput";
 import RoundedButton from "../../../components/shared/RoundedButton/RoundedButton";
 import { categoryType, wordsType } from "../../../types/types";
@@ -11,9 +11,11 @@ type props = {
 export default function NewCategory({ data, setData }: props) {
   const [category, setCategory] = useState("");
   const [error, setError] = useState("");
+  const inputRef = useRef<HTMLInputElement | null>(null);
 
   const addCategory = (e: SyntheticEvent) => {
     e.preventDefault();
+
     if (!category.trim().length) return;
     const categories = data.reduce(
       (acc, cur) => [...acc, Object.keys(cur)[0]],
@@ -31,6 +33,7 @@ export default function NewCategory({ data, setData }: props) {
     const newCategory = { [category]: [] } as categoryType;
     setData((prev) => [newCategory, ...prev]);
     setCategory("");
+    inputRef?.current?.focus();
   };
 
   return (
@@ -38,6 +41,7 @@ export default function NewCategory({ data, setData }: props) {
       <form onSubmit={addCategory} className="flex gap-2 flex-wrap w-full">
         <div className="flex flex-col grow sm:grow-0 overflow-auto">
           <MyInput
+            ref={inputRef}
             placeholder="Новая категория"
             value={category}
             onChange={(e) => {
