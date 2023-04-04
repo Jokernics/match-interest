@@ -21,6 +21,20 @@ export default function EditableTitle({
 
   const containerRef = useRef<HTMLDivElement>(null);
 
+  const handleEditingMode = (isEditing: boolean) => {
+    if (isEditing) {
+      if (containerRef.current) {
+        const width = Number.parseFloat(
+          window.getComputedStyle(containerRef.current, null).width
+        );
+        setInputWidth(width);
+        setIsEditingMode(true);
+      }
+    } else {
+      setIsEditingMode(false);
+    }
+  };
+
   const handleKeyUp = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
       event.preventDefault();
@@ -28,31 +42,6 @@ export default function EditableTitle({
       setIsEditingMode(false);
     }
   };
-
-  const handleWidth = () => {
-    if (containerRef.current) {
-      const width = Number.parseFloat(
-        window.getComputedStyle(containerRef.current, null).width
-      );
-      setInputWidth(width);
-    }
-  };
-
-  useEffect(() => {
-    handleWidth();
-  }, [isEditingMode]);
-
-  useEffect(() => {
-    const handleResize = () => {
-      handleWidth();
-    };
-    handleResize();
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
 
   return (
     <div
@@ -66,7 +55,7 @@ export default function EditableTitle({
           onKeyUp={handleKeyUp}
           type="text"
           className="pr-2 overflow-auto"
-          onBlur={() => setIsEditingMode(false)}
+          onBlur={() => handleEditingMode(false)}
           autoFocus
           onChange={onChange}
           value={inputValue}
@@ -75,7 +64,7 @@ export default function EditableTitle({
       ) : (
         <h5
           onClick={() => {
-            setIsEditingMode(true);
+            handleEditingMode(true);
           }}
           className="h-full whitespace-nowrap overflow-auto min-w-[2.3em] pl-1 pr-1 flex items-center"
         >

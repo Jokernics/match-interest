@@ -11,7 +11,7 @@ export default function ExampleSphere() {
   useEffect(() => {
     const handleResize = () => {
       const calculatedRadius = Math.min(window.innerWidth, height) / 2
-      setRadius(calculatedRadius);
+      setRadius(calculatedRadius - 2);
     };
     handleResize()
     window.addEventListener("resize", handleResize);

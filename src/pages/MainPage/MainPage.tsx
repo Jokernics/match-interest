@@ -4,7 +4,7 @@ import ExampleSphere from "./ExampleSphere";
 export default function MainPage() {
   const paragraph = [
     "Тест на совместимость:",
-    "Заполните список своих увлечений, поделитесь им c друзьями",
+    "Заполните список своих увлечений, поделитесь им c друзьями и",
     "проверьте на сколько вы похожи",
   ];
 

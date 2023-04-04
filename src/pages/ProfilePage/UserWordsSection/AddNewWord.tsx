@@ -1,4 +1,4 @@
-import { SyntheticEvent, useState } from "react";
+import { SyntheticEvent, useState, useRef } from "react";
 import MyInput from "../../../components/shared/MyInput";
 import RoundedButton from "../../../components/shared/RoundedButton/RoundedButton";
 import { categoryType, wordsType } from "../../../types/types";
@@ -19,6 +19,7 @@ export default function AddNewWord({
   categoryName,
 }: props) {
   const [newWord, setNewWord] = useState("");
+  const inputRef = useRef<HTMLInputElement | null>(null)
 
   const addNewWord = (e: SyntheticEvent) => {
     e.preventDefault();
@@ -32,11 +33,13 @@ export default function AddNewWord({
 
     setNewWord("");
     setData(newData);
+    inputRef?.current?.focus()
   };
   return (
     <form onSubmit={addNewWord} className="flex flex-wrap gap-2 w-full">
      <div className="flex flex-col grow sm:grow-0 overflow-auto">
         <MyInput
+          ref={inputRef}
           placeholder="Новое слово"
           value={newWord}
           onChange={(e) => setNewWord(e.target.value)}

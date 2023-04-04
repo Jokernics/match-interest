@@ -23,7 +23,7 @@ export default memo(function SphereSlider({
   let width = diameter > maxWidth ? maxWidth : diameter;
   const gap = 40;
   const maxLength = Math.round(fillingRatio * width);
-  const chunkedArray = splitArrayByLength({ array, chunkLength: maxLength });
+  const chunkedArray = useMemo(() => splitArrayByLength({ array, chunkLength: maxLength }), [array, maxLength])
   const [sliderIndex, setSliderIndex] = useState(0);
   const isLeftBtnDisabled = useMemo(() => sliderIndex === 0, [sliderIndex]);
   const isRightBtnDisabled = useMemo(
@@ -56,6 +56,29 @@ export default memo(function SphereSlider({
     };
   }, []);
 
+  useEffect(() => {
+    console.log('chunkedArray')
+  }, [chunkedArray])
+  
+
+  const spheres = useMemo(() => {
+    return chunkedArray.map((words, i) => (
+      <TagCloud
+        key={i}
+        options={(w: Window & typeof globalThis) => ({
+          radius: radius,
+          maxSpeed: "normal",
+          initSpeed: "fast",
+          direction: "110",
+        })}
+        onClick={handleClick}
+        onClickOptions={{ passive: true }}
+      >
+        {words}
+      </TagCloud>
+    ));
+  }, [chunkedArray, handleClick, radius]);
+
   return (
     <div
       className={`flex relative overflow-hidden ${className}`}
@@ -69,21 +92,7 @@ export default memo(function SphereSlider({
           gap,
         }}
       >
-        {chunkedArray.map((words, i) => (
-          <TagCloud
-            key={i}
-            options={(w: Window & typeof globalThis) => ({
-              radius: radius,
-              maxSpeed: "normal",
-              initSpeed: "fast",
-              direction: "110",
-            })}
-            onClick={handleClick}
-            onClickOptions={{ passive: true }}
-          >
-            {words}
-          </TagCloud>
-        ))}
+        {spheres}
       </div>
       {chunkedArray.length > 1 && (
         <div
